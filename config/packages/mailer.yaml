@@ -1,0 +1,19 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+        envelope:
+            recipients: ['noreply@astral-planner.io']
+
+when@dev:
+    framework:
+        mailer:
+            dsn: '%env(MAILER_DSN)%'
+            envelope:
+                recipients: ['app@test.io']
+
+when@test:
+    framework:
+        mailer:
+            dsn: 'null://null'
+            envelope:
+                recipients: ['ap@test.io']

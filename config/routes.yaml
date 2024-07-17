@@ -1,0 +1,13 @@
+api_login_check:
+    path: /api/login_check
+    methods: [POST]
+
+ping_controller:
+    resource: ../src/Domain/Common/Controller/
+    type: attribute
+    prefix: /api
+
+user_actions:
+    resource: ../src/Domain/User/Action/
+    type: attribute
+    prefix: /api
