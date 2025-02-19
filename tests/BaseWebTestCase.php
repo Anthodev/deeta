@@ -107,7 +107,7 @@ class BaseWebTestCase extends WebTestCase
         );
 
         if (false === $enabled) {
-            $user->setEnabled(false);
+            $user->setEnabled(0);
         }
 
         $this->entityManager->persist($user);

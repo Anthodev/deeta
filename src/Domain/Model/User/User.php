@@ -12,7 +12,7 @@ use Symfony\Component\Uid\Ulid;
 class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserInterface
 {
     private ?string $id = null;
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTime $createdAt = null;
     private ?\DateTime $updatedAt = null;
 
     public function __construct(
@@ -20,7 +20,7 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
         private string $username,
         private ?string $password = null,
         private ?string $plainPassword = null,
-        private bool $enabled = false,
+        private int $enabled = 0,
         private ?Role $role = null,
     ) {
     }
@@ -85,24 +85,24 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
         return $this;
     }
 
-    public function isEnabled(): bool
+    public function isEnabled(): int
     {
         return $this->enabled;
     }
 
-    public function setEnabled(bool $enabled): self
+    public function setEnabled(int $enabled): self
     {
         $this->enabled = $enabled;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 

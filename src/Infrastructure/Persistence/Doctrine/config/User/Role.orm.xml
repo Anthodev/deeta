@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                  https://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+    https://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="App\Domain\Model\User\Role" table="roles">
-        <id name="id" type="ulid" column="id">
+        <id name="id" type="string" column="id">
             <generator strategy="CUSTOM"/>
             <custom-id-generator class="Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator"/>
         </id>
@@ -16,15 +16,15 @@
         <field name="code" type="string" column="code" length="32" unique="true">
         </field>
 
-        <field name="createdAt" type="datetime_immutable" column="created_at">
+        <field name="createdAt" type="datetime" column="created_at">
             <options>
-                <option name="default">NOW()</option>
+                <option name="default">CURRENT_TIMESTAMP</option>
             </options>
         </field>
 
         <field name="updatedAt" type="datetime" column="updated_at">
             <options>
-                <option name="default">NOW()</option>
+                <option name="default">CURRENT_TIMESTAMP</option>
             </options>
         </field>
 

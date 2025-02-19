@@ -44,7 +44,7 @@ abstract class BaseTestCase extends KernelTestCase
         );
 
         if (false === $enabled) {
-            $user->setEnabled(false);
+            $user->setEnabled(0);
         }
 
         $this->entityManager->persist($user);

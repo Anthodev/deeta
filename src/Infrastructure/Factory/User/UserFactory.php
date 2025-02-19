@@ -30,7 +30,7 @@ class UserFactory
         ?string $plainPassword = null,
     ): User {
         $user = self::makeUser($email, $username, $password, $plainPassword);
-        $user->setEnabled(true);
+        $user->setEnabled(1);
 
         return $user;
     }

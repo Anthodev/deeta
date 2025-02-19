@@ -1,11 +1,10 @@
 #syntax=docker/dockerfile:1
 # Versions
-FROM dunglas/frankenphp:1.4.2-php8.4 AS frankenphp_upstream
+FROM dunglas/frankenphp:1.4.4-php8.4 AS frankenphp_upstream
 
 # The different stages of this Dockerfile are meant to be built into separate images
 # https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage
 # https://docs.docker.com/compose/compose-file/#target
-
 
 # Base FrankenPHP image
 FROM frankenphp_upstream AS frankenphp_base
@@ -17,13 +16,13 @@ VOLUME /app/var/
 # persistent / runtime deps
 # hadolint ignore=DL3008
 RUN apt-get update && apt-get install -y --no-install-recommends \
-	acl \
-	file \
-	gettext \
-	git \
+    acl \
+    file \
+    gettext \
+    git \
     bash \
     supervisor \
-	&& rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 RUN set -eux; \
     install-php-extensions \
@@ -32,8 +31,12 @@ RUN set -eux; \
         intl \
         opcache \
         zip \
-        pdo_pgsql \
         sqlite3 \
+        pdo_sqlite \
+        mbstring \
+        xml \
+        ctype \
+        tokenizer \
     ;
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser

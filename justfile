@@ -12,14 +12,12 @@ alias start := setup-project
 alias sdb := setup-database
 alias rdb := reset-database
 alias ddb := drop-database
-alias cdb := create-database
 alias m := migrate
 alias f := fixtures
 alias mm := make-migration
 
 alias sdbt := setup-database-test
 alias ddbt := drop-database-test
-alias cdbt := create-database-test
 alias mt := migrate-test
 alias ft := fixtures-test
 
@@ -30,8 +28,8 @@ alias c := composer-install
 alias ss := supervisor-start
 alias sp := supervisor-stop
 
-container-name := "symfony-bootstrap-php-1"
-docker-running := `docker ps -q --filter name=symfony-bootstrap-php-1 | grep -q . && echo true || echo false`
+container-name := "deeta-php-1"
+docker-running := `docker ps -q --filter name=deeta-php-1 | grep -q . && echo true || echo false`
 
 d := if docker-running == "true" { "docker exec -t " + container-name + " php" } else { "php" }
 shell := if docker-running == "true" { "docker exec -t " + container-name } else { "" }
@@ -74,7 +72,7 @@ reset-permissions:
 
 #---------- Container commands ----------
 bash:
-    @docker exec -it symfony-bootstrap-php-1 bash
+    @docker exec -it deeta-php-1 bash
 
 #---------- Symfony commands ----------
 cc:
@@ -91,16 +89,12 @@ setup-database:
 reset-database:
     @echo "Resetting the database..."
     just ddb
-    just cdb
     just sdb
 #    just sp
 #    just ss
 
 drop-database:
-    {{console}} doctrine:database:drop --force --if-exists
-
-create-database:
-    {{console}} doctrine:database:create --if-not-exists
+    {{shell}} rm var/data.db
 
 migrate:
     {{console}} doctrine:migrations:migrate --no-interaction
@@ -113,15 +107,11 @@ make-migration:
 
 setup-database-test:
     just ddbt
-    just cdbt
     just mt
     just ft
 
 drop-database-test:
-    {{console}} doctrine:database:drop --force --if-exists -e test
-
-create-database-test:
-    {{console}} doctrine:database:create --if-not-exists -e test
+    {{shell}} rm var/data_test.db
 
 migrate-test:
     {{console}} doctrine:migrations:migrate --no-interaction -e test

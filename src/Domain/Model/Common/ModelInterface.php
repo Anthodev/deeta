@@ -12,9 +12,9 @@ interface ModelInterface
 
     public function setDefaultId(): self;
 
-    public function getCreatedAt(): ?\DateTimeImmutable;
+    public function getCreatedAt(): ?\DateTime;
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self;
+    public function setCreatedAt(\DateTime $createdAt): self;
 
     public function getUpdatedAt(): ?\DateTime;
 

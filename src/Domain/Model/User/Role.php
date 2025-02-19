@@ -12,7 +12,7 @@ use Symfony\Component\Uid\Ulid;
 class Role implements ModelInterface
 {
     private ?string $id = null;
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTime $createdAt = null;
     private ?\DateTime $updatedAt = null;
 
     public function __construct(
@@ -59,12 +59,12 @@ class Role implements ModelInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(?\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
