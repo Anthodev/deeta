@@ -18,7 +18,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             email: 'admin@test.io',
             username: 'admin',
             plainPassword: 'test',
-            enabled: true,
+            enabled: 1,
         );
 
         /** @var Role $adminRole */

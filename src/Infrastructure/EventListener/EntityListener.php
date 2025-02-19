@@ -22,7 +22,7 @@ class EntityListener
             return;
         }
 
-        $entity->setCreatedAt(new \DateTimeImmutable());
+        $entity->setCreatedAt(new \DateTime());
         $entity->setUpdatedAt(new \DateTime());
     }
 
