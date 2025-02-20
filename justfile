@@ -25,6 +25,13 @@ alias e := ecs
 
 alias c := composer-install
 
+alias im := importmap
+alias ir := importmap-require
+alias ii := importmap-install
+alias iu := importmap-update
+alias irm := importmap-remove
+alias ima := importmap-audit
+
 alias ss := supervisor-start
 alias sp := supervisor-stop
 
@@ -118,6 +125,25 @@ migrate-test:
 
 fixtures-test:
     {{console}} doctrine:fixtures:load --no-interaction -e test
+
+#---------- Symfony & ImportMap commands ----------
+importmap:
+    {{console}} importmap
+
+importmap-require:
+    {{console}} importmap:require
+
+importmap-install:
+    {{console}} importmap:install
+
+importmap-update:
+    {{console}} importmap:update
+
+importmap-remove:
+    {{console}} importmap:remove
+
+importmap-audit:
+    {{console}} importmap:audit
 
 #---------- Test & Analysis commands ----------
 tests:
