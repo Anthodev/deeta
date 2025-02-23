@@ -31,6 +31,13 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            form_login:
+                login_path: app_admin_login
+                check_path: app_admin_login
+                enable_csrf: true
+            logout:
+                path: /logout
+                target: app_admin_login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -45,6 +52,8 @@ security:
         - { path: ^/api/ping_auth, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/ping, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/admin/login, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/, roles: PUBLIC_ACCESS }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

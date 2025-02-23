@@ -32,6 +32,8 @@ alias iu := importmap-update
 alias irm := importmap-remove
 alias ima := importmap-audit
 
+alias tw := tailwind-watch
+
 alias ss := supervisor-start
 alias sp := supervisor-stop
 
@@ -144,6 +146,9 @@ importmap-remove:
 
 importmap-audit:
     {{console}} importmap:audit
+
+tailwind-watch:
+    {{console}} tailwind:build --watch
 
 #---------- Test & Analysis commands ----------
 tests:

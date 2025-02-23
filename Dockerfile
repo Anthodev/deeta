@@ -22,6 +22,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     bash \
     supervisor \
+    nodejs \
+    npm \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -eux; \
@@ -91,6 +93,9 @@ COPY --link frankenphp/worker.Caddyfile /etc/caddy/worker.Caddyfile
 COPY --link composer.* symfony.* ./
 RUN set -eux; \
 	composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
+
+COPY package*.json ./
+RUN npm install
 
 # copy sources
 COPY --link . ./
