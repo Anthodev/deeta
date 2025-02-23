@@ -12,6 +12,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 #[When('prod')]
+#[When('test')]
 class JsonExceptionListener implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array

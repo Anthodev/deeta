@@ -1,4 +1,7 @@
 import './bootstrap.js';
+import 'daisyui/dist/full.min.css';
+import '@catppuccin/daisyui/dist/catppuccin.min.css';
+
 /*
  * Welcome to your app's main JavaScript file!
  *

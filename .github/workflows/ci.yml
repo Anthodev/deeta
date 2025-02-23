@@ -57,6 +57,9 @@ jobs:
         name: Static Analysis
         run: docker compose exec -T php vendor/bin/phpstan analyse
       -
+        name: Generate Tailwind CSS build
+        run: docker compose exec -T php bin/console tailwind:build
+      -
         name: Check HTTP reachability
         run: curl -v --fail-with-body http://localhost
       -

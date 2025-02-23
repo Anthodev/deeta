@@ -1,6 +1,3 @@
-import daisyui from "daisyui";
-import catppuccin from '@catppuccin/daisyui';
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -11,13 +8,9 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [
-    require("daisyui"),
-  ],
+  plugins: [],
   daisyui: {
-    themes: [
-      catppuccin('macchiato', 'lavender'),
-    ],
+    themes: [],
     darkTheme: "dark",
     base: true,
     styled: true,
