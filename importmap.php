@@ -25,4 +25,48 @@ return [
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
+    'daisyui' => [
+        'version' => '4.12.23',
+    ],
+    'postcss-js' => [
+        'version' => '4.0.1',
+    ],
+    'picocolors' => [
+        'version' => '1.1.1',
+    ],
+    'css-selector-tokenizer' => [
+        'version' => '0.8.0',
+    ],
+    'culori/require' => [
+        'version' => '3.3.0',
+    ],
+    'daisyui/dist/full.min.css' => [
+        'version' => '4.12.23',
+        'type' => 'css',
+    ],
+    'camelcase-css' => [
+        'version' => '2.0.1',
+    ],
+    'postcss' => [
+        'version' => '8.4.33',
+    ],
+    'fastparse' => [
+        'version' => '1.1.2',
+    ],
+    'cssesc' => [
+        'version' => '3.0.0',
+    ],
+    'nanoid/non-secure' => [
+        'version' => '3.3.7',
+    ],
+    '@catppuccin/daisyui' => [
+        'version' => '1.2.1',
+    ],
+    '@catppuccin/palette' => [
+        'version' => '1.7.1',
+    ],
+    '@catppuccin/daisyui/dist/catppuccin.min.css' => [
+        'version' => '1.2.1',
+        'type' => 'css',
+    ],
 ];

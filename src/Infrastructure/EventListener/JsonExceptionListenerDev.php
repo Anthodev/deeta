@@ -11,9 +11,8 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-#[When('prod')]
-#[When('test')]
-class JsonExceptionListener implements EventSubscriberInterface
+#[When('dev')]
+class JsonExceptionListenerDev implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {
@@ -37,24 +36,11 @@ class JsonExceptionListener implements EventSubscriberInterface
 
         $content = [
             'code' => $exceptionCode,
-            'message' => $this->createMessage($exceptionCode),
+            'message' => $exception->getMessage(),
         ];
 
         $event->setResponse(
             new JsonResponse($content, $content['code'])
         );
-    }
-
-    private function createMessage(int $code): string
-    {
-        return match ($code) {
-            400 => 'Bad Request',
-            401, 403 => 'Unauthorized',
-            404 => 'Not Found',
-            415 => 'Unsupported Media Type',
-            422 => 'Unprocessable Entity',
-            429 => 'Too Many Requests',
-            default => 'An error occurred',
-        };
     }
 }
