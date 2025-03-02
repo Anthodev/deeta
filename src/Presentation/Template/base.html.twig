@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-theme="macchiato" lang="en">
+<html data-theme="night" lang="en">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -12,7 +12,8 @@
         {% endblock %}
     </head>
     <body>
-    <div class="container mx-auto h-screen">
+    {{ component('Common:FlashBag') }}
+    <div class="flex flex-col items-center justify-center h-screen">
         <div class="">
             {% block content %}
             {% endblock %}

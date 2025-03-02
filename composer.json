@@ -12,7 +12,7 @@
         "doctrine/doctrine-bundle": "^2.13.2",
         "doctrine/doctrine-migrations-bundle": "^3.4.1",
         "doctrine/orm": "^3.3.2",
-        "lexik/jwt-authentication-bundle": "^3.1",
+        "lexik/jwt-authentication-bundle": "^3.1.1",
         "runtime/frankenphp-symfony": "^0.2.0",
         "symfony/asset": "7.2.*",
         "symfony/asset-mapper": "7.2.*",
@@ -32,8 +32,8 @@
         "symfony/validator": "7.2.*",
         "symfony/yaml": "7.2.*",
         "symfonycasts/tailwind-bundle": "^0.7.1",
-        "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/extra-bundle": "^2.12|^3.20",
+        "twig/twig": "^2.12|^3.20"
     },
     "config": {
         "allow-plugins": {
@@ -92,9 +92,9 @@
         "dama/doctrine-test-bundle": "^8.2.2",
         "doctrine/doctrine-fixtures-bundle": "^4.0",
         "fakerphp/faker": "^1.24.1",
-        "pestphp/pest": "^3.7",
-        "phpstan/phpstan": "^2.1.5",
-        "phpunit/php-code-coverage": "^11.0.8",
+        "pestphp/pest": "^3.7.4",
+        "phpstan/phpstan": "^2.1.6",
+        "phpunit/php-code-coverage": "^11.0.9",
         "symfony/browser-kit": "7.2.*",
         "symfony/css-selector": "7.2.*",
         "symfony/maker-bundle": "^1.62.1",

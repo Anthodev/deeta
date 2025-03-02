@@ -15,9 +15,18 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
     private ?\DateTime $createdAt = null;
     private ?\DateTime $updatedAt = null;
 
+    public ?string $fullName {
+        get => $this->firstName.' '. $this->lastName;
+    }
+
     public function __construct(
         private string $email,
         private string $username,
+        private ?string $firstName = null,
+        private ?string $lastName = null,
+        private ?string $jobTitle = null,
+        private ?string $company = null,
+        private ?string $location = null,
         private ?string $password = null,
         private ?string $plainPassword = null,
         private int $enabled = 0,
@@ -57,6 +66,71 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    public function getJobTitle(): ?string
+    {
+        return $this->jobTitle;
+    }
+
+    public function setJobTitle(?string $jobTitle): self
+    {
+        $this->jobTitle = $jobTitle;
+
+        return $this;
+    }
+
+    public function getCompany(): ?string
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?string $company): self
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?string $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }

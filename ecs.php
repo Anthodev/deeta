@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
+use PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocToCommentFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return ECSConfig::configure()
-    ->withPaths([__DIR__ . '/src'])
+    ->withPaths([
+        __DIR__ . '/src',
+        __DIR__ . '/tests',
+    ])
     ->withPhpCsFixerSets(
         doctrineAnnotation: true,
         per: true,
@@ -14,5 +18,6 @@ return ECSConfig::configure()
         symfony: true,
     )
     ->withSkip([
-        PhpdocToCommentFixer::class
+        PhpdocToCommentFixer::class,
+        VisibilityRequiredFixer::class,
     ]);

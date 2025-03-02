@@ -2,10 +2,16 @@
 
 {% block content %}
     <div>
-        <h1>Hello {{ app.user.username }}!</h1>
-    </div>
+        <div class="mb-10">
+            <h1>Hello {{ app.user.username }}!</h1>
+        </div>
 
-    <div class="mt-8">
-        <a href="/logout" class="btn btn-primary">Se déconnecter</a>
+        {{ component('Admin:MeInfo', {
+            user: app.user,
+        }) }}
+
+        <div class="mt-8">
+            <a href="/logout" class="btn btn-primary">Se déconnecter</a>
+        </div>
     </div>
 {% endblock %}

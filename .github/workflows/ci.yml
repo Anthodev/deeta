@@ -34,11 +34,13 @@ jobs:
             *.cache-to=type=gha,scope=${{github.ref}},mode=max
         env:
           APP_ENV: test
+          APP_SECRET: '$ecretf0rt3st'
       -
         name: Start services
         run: docker compose up --wait --no-build
         env:
           APP_ENV: test
+          APP_SECRET: '$ecretf0rt3st'
       -
         name: Symfony CLI
         run: |
@@ -56,6 +58,15 @@ jobs:
       -
         name: Static Analysis
         run: docker compose exec -T php vendor/bin/phpstan analyse
+      -
+        name: Run NPM install
+        run: docker compose exec -T php npm install
+      -
+        name: Run NPM run dev
+        run: docker compose exec -T php npm run dev
+      -
+        name: Run ImportMap install
+        run: docker compose exec -T php bin/console importmap:install
       -
         name: Generate Tailwind CSS build
         run: docker compose exec -T php bin/console tailwind:build

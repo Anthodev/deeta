@@ -59,7 +59,7 @@ class BaseWebTestCase extends WebTestCase
         $jwtPayloadManager = static::$client->getContainer()->get(JwtPayloadManager::class);
         $token = $jwtPayloadManager->getJwtToken();
 
-        static::$client->setServerParameter('Authorization', 'Bearer ' . $token);
+        static::$client->setServerParameter('Authorization', 'Bearer '.$token);
     }
 
     public function getUser(): User
