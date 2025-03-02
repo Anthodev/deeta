@@ -65,6 +65,12 @@ jobs:
         name: Generate Tailwind CSS build
         run: docker compose exec -T php bin/console tailwind:build
       -
+        name: Set APP_SECRET in .env.local
+        run: |
+          echo "APP_SECRET='$ecretf0rt3st'" > .env.local
+          docker compose exec -T php cat .env.local
+          docker compose exec -T php bin/console cache:clear
+      -
         name: Check HTTP reachability
         run: curl -v --fail-with-body http://localhost
       -
