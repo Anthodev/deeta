@@ -63,7 +63,7 @@ jobs:
         run: docker compose exec -T php npm install
       -
         name: Run NPM run dev
-        run: docker compose exec -T php npm run dev
+        run: docker compose exec -T php npm run build
       -
         name: Run ImportMap install
         run: docker compose exec -T php bin/console importmap:install
