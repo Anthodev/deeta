@@ -1,12 +1,14 @@
 {
 	{$CADDY_GLOBAL_OPTIONS}
 
+	env APP_SECRET {$APP_SECRET}
+
 	frankenphp {
 		{$FRANKENPHP_CONFIG}
 	}
 }
 
-{$CADDY_EXTRA_CONFIG} 
+{$CADDY_EXTRA_CONFIG}
 
 {$SERVER_NAME:localhost} {
 	log {
@@ -37,7 +39,7 @@
 		{$MERCURE_EXTRA_DIRECTIVES}
 	}
 
-	vulcain 
+	vulcain
 
 	{$CADDY_SERVER_EXTRA_DIRECTIVES}
 

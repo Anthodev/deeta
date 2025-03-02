@@ -67,9 +67,8 @@ jobs:
       -
         name: Set APP_SECRET in .env.local
         run: |
-          echo "APP_SECRET='$ecretf0rt3st'" > .env.local
-          docker compose exec -T php cat .env.local
-          docker compose exec -T php bin/console cache:clear
+          docker compose exec -T php sh -c 'echo "APP_SECRET=$ecretf0rt3st" >> /etc/environment'
+          docker compose restart php
       -
         name: Check HTTP reachability
         run: curl -v --fail-with-body http://localhost
