@@ -9,7 +9,7 @@ export default class extends Controller {
     setTimeout(async () => {
       await component.action('removeMessage', {id: this.element.id});
       this.element.remove();
-    }, 13000);
+    }, 3000);
   }
 
   async getFlashBagComponent(flashBagContainer) {

@@ -70,9 +70,6 @@ jobs:
       -
         name: Check HTTPS reachability
         run: curl -vk --fail-with-body https://localhost
-        env:
-          APP_ENV: test
-          APP_SECRET: '$ecretf0rt3st'
       -
         name: Check Mercure reachability
         if: false
