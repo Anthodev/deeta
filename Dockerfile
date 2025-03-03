@@ -22,6 +22,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     bash \
     supervisor \
+    watchman \
+    nodejs \
+    npm \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -eux; \

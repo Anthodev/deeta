@@ -16,10 +16,25 @@
         <field name="username" type="string" column="username" length="255">
         </field>
 
+        <field name="firstName" type="string" column="first_name" length="255" nullable="true">
+        </field>
+
+        <field name="lastName" type="string" column="last_name" length="255" nullable="true">
+        </field>
+
         <field name="password" type="string" column="password" length="255">
         </field>
 
         <field name="plainPassword" type="string" column="plain_password" length="255" nullable="true">
+        </field>
+
+        <field name="jobTitle" type="string" column="job_title" length="255" nullable="true">
+        </field>
+
+        <field name="company" type="string" column="company" length="255" nullable="true">
+        </field>
+
+        <field name="location" type="string" column="location" length="255" nullable="true">
         </field>
 
         <field name="enabled" type="integer" column="enabled">

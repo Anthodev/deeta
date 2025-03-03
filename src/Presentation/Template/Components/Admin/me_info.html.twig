@@ -1,0 +1,73 @@
+<div {{ attributes }} class="flex flex-col gap-4">
+    <fieldset class="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box">
+        <legend class="fieldset-legend">My information</legend>
+
+        <label class="fieldset-label">Prénom</label>
+        <label class="input">
+            <input
+                type="text"
+                class="input"
+                placeholder="Écrivez votre prénom"
+                data-model="firstName"
+                value="{{ this.firstName ?? '' }}"
+            />
+            <span class="badge badge-neutral badge-xs">Optional</span>
+        </label>
+
+        <label class="fieldset-label">Nom</label>
+        <label class="input">
+            <input
+                type="text"
+                class="input"
+                placeholder="Écrivez votre nom"
+                data-model="lastName"
+                value="{{ this.lastName ?? '' }}"
+            />
+            <span class="badge badge-neutral badge-xs">Optional</span>
+        </label>
+
+        <label class="fieldset-label">Poste</label>
+        <label class="input">
+            <input
+                type="text"
+                class="input"
+                placeholder="Écrivez votre job title"
+                data-model="jobTitle"
+                value="{{ this.jobTitle ?? '' }}"
+            />
+            <span class="badge badge-neutral badge-xs">Optional</span>
+        </label>
+
+        <label class="fieldset-label">Société actuelle</label>
+        <label class="input">
+            <input
+                type="text"
+                class="input"
+                placeholder="Écrivez votre company"
+                data-model="company"
+                value="{{ this.company ?? '' }}"
+            />
+            <span class="badge badge-neutral badge-xs">Optional</span>
+        </label>
+
+        <label for="location" class="fieldset-label">Lieu</label>
+        <label class="input">
+            <input
+                type="text"
+                class="input"
+                placeholder="Écrivez votre location"
+                data-model="location"
+                value="{{ this.location ?? '' }}"
+            />
+            <span class="badge badge-neutral badge-xs">Optional</span>
+        </label>
+
+        <button
+            class="btn btn-neutral mt-4"
+            data-action="click->live#action"
+            data-live-action-param="save"
+        >
+            Save
+        </button>
+    </fieldset>
+</div>

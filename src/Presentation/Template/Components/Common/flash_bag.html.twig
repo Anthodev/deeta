@@ -1,0 +1,15 @@
+<div {{ attributes }}
+    class="fixed top-5 right-5 px-6 py-4 rounded transition-opacity duration-300 ease-in-out flex flex-col w-80"
+    style="z-index: 99 !important"
+>
+    {% for id, message in messages %}
+        <div {{ stimulus_controller('flash_bag') }} id="{{ id }}" class="h-10 justify-end items-start inline-flex mb-2">
+            <div role="alert" class="px-3 py-2 gap-2 flex alert alert-soft alert-{{ message.type }} text-black grow">
+                <div class="justify-start items-center gap-2 flex w-full">
+                    <span class="w-6 h-6">{{ ux_icon('ph:check-fat-light') }}</span>
+                    <span class="w-full">{{ message.content }}</span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

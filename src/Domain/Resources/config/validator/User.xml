@@ -14,6 +14,16 @@
                 <option name="max">255</option>
             </constraint>
         </property>
+        <property name="firstName">
+            <constraint name="Length">
+                <option name="max">255</option>
+            </constraint>
+        </property>
+        <property name="lastName">
+            <constraint name="Length">
+                <option name="max">255</option>
+            </constraint>
+        </property>
         <property name="password">
             <constraint name="Length">
                 <option name="min">12</option>
@@ -28,6 +38,21 @@
                 <option name="minMessage">Your password must be at least {{ limit }} characters long.</option>
             </constraint>
             <constraint name="PasswordStrength" />
+        </property>
+        <property name="jobTitle">
+            <constraint name="Length">
+                <option name="max">255</option>
+            </constraint>
+        </property>
+        <property name="company">
+            <constraint name="Length">
+                <option name="max">255</option>
+            </constraint>
+        </property>
+        <property name="location">
+            <constraint name="Length">
+                <option name="max">255</option>
+            </constraint>
         </property>
     </class>
 </constraint-mapping>

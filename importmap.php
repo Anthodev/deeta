@@ -26,38 +26,23 @@ return [
         'version' => '3.2.2',
     ],
     'daisyui' => [
-        'version' => '4.12.23',
+        'version' => '5.0.0-beta.9',
     ],
-    'postcss-js' => [
-        'version' => '4.0.1',
+    'daisyui/daisyui.min.css' => [
+        'version' => '5.0.0-beta.9',
+        'type' => 'css',
+    ],
+    'postcss' => [
+        'version' => '8.5.3',
     ],
     'picocolors' => [
         'version' => '1.1.1',
     ],
-    'css-selector-tokenizer' => [
-        'version' => '0.8.0',
-    ],
-    'culori/require' => [
-        'version' => '3.3.0',
-    ],
-    'daisyui/dist/full.min.css' => [
-        'version' => '4.12.23',
-        'type' => 'css',
-    ],
-    'camelcase-css' => [
-        'version' => '2.0.1',
-    ],
-    'postcss' => [
-        'version' => '8.4.33',
-    ],
-    'fastparse' => [
-        'version' => '1.1.2',
-    ],
-    'cssesc' => [
-        'version' => '3.0.0',
-    ],
     'nanoid/non-secure' => [
-        'version' => '3.3.7',
+        'version' => '3.3.8',
+    ],
+    '@tailwindcss/postcss' => [
+        'version' => '4.0.9',
     ],
     '@catppuccin/daisyui' => [
         'version' => '1.2.1',

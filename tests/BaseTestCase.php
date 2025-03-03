@@ -11,6 +11,7 @@ use App\Infrastructure\Persistence\Doctrine\User\Repository\DoctrineRoleReposito
 use App\Tests\Trait\UtilsTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Uid\Uuid;
 
 abstract class BaseTestCase extends KernelTestCase
 {
@@ -49,6 +50,31 @@ abstract class BaseTestCase extends KernelTestCase
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
+        return $user;
+    }
+
+    public function makeMockedUser(
+        string $email = self::DEFAULT_USER_EMAIL,
+        string $username = 'Test',
+        string $password = 'test1234',
+        bool $enabled = true,
+    ): User {
+        $roleRepository = static::getContainer()->get(DoctrineRoleRepository::class);
+        $roleUser = $roleRepository->findOneBy(['code' => RoleCodeEnum::ROLE_USER->value]);
+
+        $user = UserFactory::makeVerifiedUserWithRole(
+            email: $email,
+            username: $username,
+            role: $roleUser,
+            plainPassword: $password
+        );
+
+        if (false === $enabled) {
+            $user->setEnabled(0);
+        }
+
+        $user->setId(Uuid::v7()->__toString());
 
         return $user;
     }
