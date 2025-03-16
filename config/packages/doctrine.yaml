@@ -22,6 +22,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Infrastructure/Persistence/Doctrine/config/User'
                 prefix: 'App\Domain\Model\User'
                 alias: User
+            Info:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Infrastructure/Persistence/Doctrine/config/Info'
+                prefix: 'App\Domain\Model\Info'
+                alias: Info
         controller_resolver:
             auto_mapping: false
 

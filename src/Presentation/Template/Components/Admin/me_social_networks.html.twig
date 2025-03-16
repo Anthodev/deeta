@@ -1,0 +1,74 @@
+<div {{ attributes }} class="flex flex-col gap-4 w-[50%]">
+    <fieldset class="fieldset w-full bg-base-200 border border-base-300 p-4 rounded-box">
+        <legend class="fieldset-legend">Mes réseaux sociaux</legend>
+
+        {% for socialNetwork in this.socialNetworks %}
+            {{ component('Admin:AdminSocialNetworkItem', {
+                label: socialNetwork.label,
+                url: socialNetwork.url,
+                network: socialNetwork.network,
+                position: socialNetwork.position,
+                socialNetworkId: socialNetwork.id,
+                userId: this.userId,
+                componentId: "social-network-" ~ socialNetwork.id
+            }) }}
+        {% endfor %}
+
+        <div class="divider divider-info divider-vertical"></div>
+
+        <label> Créer un lien vers un réseau social
+            <div class="join w-full">
+                <label for="networkIcon" class="floating-label w-full">
+                    <select name="networkIcon" data-model="socialNetworkIcon" class="select join-item validator {% if this.errors is defined and this.errors.socialNetworkIcon is defined %}border-error{% endif %}" required>
+                        <option disabled selected>Select network</option>
+                        {% for network, label in this.socialNetworksOptions %}
+                            <option value="{{ network }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if this.errors is defined and this.errors.socialNetworkIcon is defined %}
+                        <p class="text-error text-xs mt-1">{{ this.errors.socialNetworkIcon }}</p>
+                    {% endif %}
+                </label>
+
+                <label for="label" class="floating-label w-full">
+                    <span>Label pour le réseau</span>
+                    <input name="label" data-model="socialNetworkName" type="text" placeholder="Label ex. MyUsername" class="input join-item validator w-full {% if this.errors is defined and this.errors.socialNetworkName is defined %}border-error{% endif %}" required />
+                    {% if this.errors is defined and this.errors.socialNetworkName is defined %}
+                        <p class="text-error text-xs mt-1">{{ this.errors.socialNetworkName }}</p>
+                    {% else %}
+                        <p class="validator-hint">You must enter a label</p>
+                    {% endif %}
+                </label>
+
+                <label for="url" class="floating-label w-full">
+                    <span>URL du réseau</span>
+                    <input name="url" data-model="socialNetworkUrl" type="text" placeholder="https://www.facebook.com" class="input join-item validator w-full {% if this.errors is defined and this.errors.socialNetworkUrl is defined %}border-error{% endif %}" required />
+                    {% if this.errors is defined and this.errors.socialNetworkUrl is defined %}
+                        <p class="text-error text-xs mt-1">{{ this.errors.socialNetworkUrl }}</p>
+                    {% else %}
+                        <p class="validator-hint">You must enter a url</p>
+                    {% endif %}
+                </label>
+
+                <label for="position" class="floating-label w-full">
+                    <span>Position du réseau</span>
+                    <input name="position" data-model="socialNetworkPosition" type="number" placeholder="0" class="input join-item validator w-full" required />
+                    <p class="validator-hint">You must enter a position</p>
+                </label>
+
+                <input type="hidden" name="userId" value="{{ this.userId }}"/>
+
+                <div>
+                    <button
+                        class="btn btn-primary join-item"
+                        data-action="click->live#action"
+                        data-live-action-param="save"
+                    >
+                        Ajouter
+                    </button>
+                </div>
+            </div>
+        </label>
+
+    </fieldset>
+</div>

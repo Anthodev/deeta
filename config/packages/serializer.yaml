@@ -1,0 +1,6 @@
+services:
+    App\Infrastructure\Serializer\SocialNetworkDtoNormalizer:
+        tags: ['serializer.normalizer']
+        
+    App\Infrastructure\Serializer\SocialNetworkDtoArrayNormalizer:
+        tags: ['serializer.normalizer'] 

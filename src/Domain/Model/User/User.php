@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Model\User;
 
 use App\Domain\Model\Common\ModelInterface;
+use App\Domain\Model\Info\SocialNetwork;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Uid\Ulid;
 
 class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserInterface
@@ -14,6 +18,10 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
     private ?string $id = null;
     private ?\DateTime $createdAt = null;
     private ?\DateTime $updatedAt = null;
+    /**
+     * @var Collection<int, SocialNetwork>
+     */
+    private Collection $socialNetworks;
 
     public ?string $fullName {
         get => $this->firstName.' '. $this->lastName;
@@ -32,6 +40,7 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
         private int $enabled = 0,
         private ?Role $role = null,
     ) {
+        $this->socialNetworks = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -207,6 +216,7 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
         return $this;
     }
 
+    #[Ignore]
     public function setDefaultId(): self
     {
         $this->id = new Ulid()->toRfc4122();
@@ -221,6 +231,32 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
         $roleCode = $role->getCode();
 
         return [$roleCode];
+    }
+
+    /**
+     * @return Collection<int, SocialNetwork>
+     */
+    public function getSocialNetworks(): Collection
+    {
+        return $this->socialNetworks;
+    }
+
+    public function addSocialNetwork(SocialNetwork $socialNetwork): self
+    {
+        if (!$this->socialNetworks->contains($socialNetwork)) {
+            $this->socialNetworks->add($socialNetwork);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialNetwork(SocialNetwork $socialNetwork): self
+    {
+        if ($this->socialNetworks->contains($socialNetwork)) {
+            $this->socialNetworks->removeElement($socialNetwork);
+        }
+
+        return $this;
     }
 
     public function eraseCredentials(): void
