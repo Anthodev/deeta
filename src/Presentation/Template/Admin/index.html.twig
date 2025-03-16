@@ -1,16 +1,25 @@
 {% extends '@app/base.html.twig' %}
 
 {% block content %}
-    <div>
+    <div class="w-full">
         <div class="mb-10">
             <h1>Hello {{ app.user.username }}!</h1>
         </div>
 
-        {{ component('Admin:MeInfo', {
-            user: app.user,
-        }) }}
+        <div class="flex gap-6">
+            {{ component('Admin:MeInfo', {
+                user: app.user,
+            }) }}
 
-        <div class="mt-8">
+            <div class="divider lg:divider-horizontal"></div>
+
+            {{ component('Admin:MeSocialNetworks', {
+                userId: currentUserId,
+                socialNetworks: socialNetworks,
+            }) }}
+        </div>
+
+        <div class="flex mt-8 justify-center">
             <a href="/logout" class="btn btn-primary">Se déconnecter</a>
         </div>
     </div>

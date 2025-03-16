@@ -57,7 +57,7 @@ jobs:
         run: docker compose exec -T php vendor/bin/ecs check
       -
         name: Static Analysis
-        run: docker compose exec -T php vendor/bin/phpstan analyse
+        run: docker compose exec -T php vendor/bin/phpstan analyse --memory-limit=256M
       -
         name: Run NPM install
         run: docker compose exec -T php npm install

@@ -155,7 +155,7 @@ tests:
     {{d}} vendor/bin/pest
 
 stan:
-    {{d}} vendor/bin/phpstan analyse
+    {{d}} vendor/bin/phpstan analyse --memory-limit=256M
 
 ecs:
     {{d}} vendor/bin/ecs check --fix

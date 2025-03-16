@@ -28,5 +28,10 @@ services:
     App\Infrastructure\Persistence\Doctrine\User\Repository\DoctrineUserRepository:
         class: App\Infrastructure\Persistence\Doctrine\User\Repository\DoctrineUserRepository
         arguments: [ '@doctrine' ]
+    
+    App\Infrastructure\Persistence\Doctrine\Info\Repository\DoctrineSocialNetworkRepository:
+        class: App\Infrastructure\Persistence\Doctrine\Info\Repository\DoctrineSocialNetworkRepository
+        arguments: [ '@doctrine' ]
 
     App\Domain\Repository\User\UserRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\User\Repository\DoctrineUserRepository'
+    App\Domain\Repository\Info\SocialNetworkRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Info\Repository\DoctrineSocialNetworkRepository'

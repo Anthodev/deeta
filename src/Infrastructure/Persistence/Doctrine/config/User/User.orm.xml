@@ -61,6 +61,12 @@
             inversed-by="users"
         />
 
+        <one-to-many
+            field="socialNetworks"
+            target-entity="App\Domain\Model\Info\SocialNetwork"
+            mapped-by="user"
+        />
+
         <indexes>
             <index name="users_email" columns="email"/>
             <index name="users_username" columns="username"/>

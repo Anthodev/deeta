@@ -74,7 +74,7 @@ class BaseWebTestCase extends WebTestCase
 
     public function makeDefaultUser(): User
     {
-        $roleRepository = static::getContainer()->get(DoctrineRoleRepository::class);
+        $roleRepository = static::$client->getContainer()->get(DoctrineRoleRepository::class);
         $roleAdmin = $roleRepository->findOneBy(['code' => RoleCodeEnum::ROLE_ADMIN->value]);
 
         $user = UserFactory::makeVerifiedUserWithRole(

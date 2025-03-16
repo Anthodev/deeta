@@ -1,0 +1,82 @@
+<div {{ attributes }} id="{{ this.componentId }}" class="w-full flex flex-col gap-4 w-[50%]">
+    <div class="join w-full">
+        <label for="networkIcon-{{ this.componentId }}" class="floating-label w-full">
+            <select
+                name="networkIcon"
+                id="networkIcon-{{ this.componentId }}"
+                data-model="network"
+                class="select join-item validator"
+                required
+                data-action="change->live#action"
+                data-live-action-param="refreshSocialNetworksOptions"
+            >
+                {% for network, label in this.socialNetworksOptions %}
+                    <option value="{{ network }}" {% if this.network == network %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label for="label-{{ this.componentId }}" class="floating-label w-full">
+            <span>Label pour le réseau</span>
+            <input
+                name="label"
+                id="label-{{ this.componentId }}"
+                data-model="label"
+                type="text"
+                value="{{ this.label }}"
+                placeholder="Label ex. MyUsername"
+                class="input join-item validator w-full"
+                required
+                data-action="input->live#action"
+                data-live-action-param="refreshSocialNetworksOptions"
+            />
+            <p class="validator-hint">You must enter a label</p>
+        </label>
+
+        <label for="url-{{ this.componentId }}" class="floating-label w-full">
+            <span>URL du réseau</span>
+            <input
+                name="url"
+                id="url-{{ this.componentId }}"
+                data-model="url"
+                type="text"
+                value="{{ this.url }}"
+                placeholder="https://www.facebook.com"
+                class="input join-item validator w-full"
+                required
+                data-action="input->live#action"
+                data-live-action-param="refreshSocialNetworksOptions"
+            />
+            <p class="validator-hint">You must enter a url</p>
+        </label>
+
+        <label for="position-{{ this.componentId }}" class="floating-label w-full">
+            <span>Position du réseau</span>
+            <input
+                name="position"
+                id="position-{{ this.componentId }}"
+                data-model="position"
+                type="number"
+                value="{{ this.position }}"
+                placeholder="0"
+                class="input join-item validator w-full"
+                required
+                data-action="input->live#action"
+                data-live-action-param="refreshSocialNetworksOptions"
+            />
+            <p class="validator-hint">You must enter a position</p>
+        </label>
+
+        <input type="hidden" name="id" value="{{ this.socialNetworkId }}"/>
+
+        <div>
+            <button
+                class="btn btn-primary join-item"
+                data-action="click->live#action"
+                data-live-action-param="update"
+            >
+                Éditer
+            </button>
+        </div>
+    </div>
+</div>
