@@ -60,21 +60,21 @@ setup-project:
     @echo "Webmail is available at http://localhost:8025"
 
 build:
-    @docker-compose build --no-cache
+    docker compose build --no-cache
 
 up:
-    @docker-compose up -d
+    docker compose up -d
 
 down:
-    @docker-compose down --remove-orphans
+    docker compose down --remove-orphans
 
 stop:
-    @docker-compose stop
+    docker compose stop
 
 prune:
-    @docker-compose down --remove-orphans
-    @docker-compose down --volumes
-    @docker-compose rm -f
+    docker compose down --remove-orphans
+    docker compose down --volumes
+    docker compose rm -f
 
 reset-permissions:
     sudo chown -Rf $(id -u):$(id -g) ./

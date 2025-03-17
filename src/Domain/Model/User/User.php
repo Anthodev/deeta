@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Model\User;
 
 use App\Domain\Model\Common\ModelInterface;
+use App\Domain\Model\Info\Skill;
 use App\Domain\Model\Info\SocialNetwork;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,6 +23,10 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
      * @var Collection<int, SocialNetwork>
      */
     private Collection $socialNetworks;
+    /**
+     * @var Collection<int, Skill>
+     */
+    private Collection $skills;
 
     public ?string $fullName {
         get => $this->firstName.' '. $this->lastName;
@@ -41,6 +46,7 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
         private ?Role $role = null,
     ) {
         $this->socialNetworks = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -254,6 +260,32 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
     {
         if ($this->socialNetworks->contains($socialNetwork)) {
             $this->socialNetworks->removeElement($socialNetwork);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        if ($this->skills->contains($skill)) {
+            $this->skills->removeElement($skill);
         }
 
         return $this;

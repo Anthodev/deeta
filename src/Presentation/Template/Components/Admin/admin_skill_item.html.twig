@@ -1,0 +1,18 @@
+<div {{ attributes }} id="{{ this.componentId }}" class="flex flex-col gap-4 w-fit">
+    <div class="join w-fit">
+        <div class="flex flex-col join-item px-2 py-6 btn {{ this.defaultColor ? 'bg-[' ~ this.defaultColor ~ ']' : 'btn-primary' }}">
+            <div class="text-lg font-bold">{{ this.label }}</div>
+            <div class="text-xs font-normal">Position: {{ this.position }}</div>
+        </div>
+
+        <div class="join-item">
+            <button
+                class="btn btn-error rounded-l-none h-full"
+                data-action="click->live#action"
+                data-live-action-param="delete"
+            >
+                {{ ux_icon('ph:x-bold', {class: 'w-4 h-4'}) }}
+            </button>
+        </div>
+    </div>
+</div>

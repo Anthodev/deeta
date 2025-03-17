@@ -1,0 +1,78 @@
+<div {{ attributes }} class="flex flex-col gap-4 w-full">
+    <fieldset class="fieldset w-full bg-base-200 border border-base-300 p-4 rounded-box">
+        <legend class="fieldset-legend">Mes compétences</legend>
+
+        <div class="flex flex-row justify-start gap-2">
+            {% for skill in this.skills %}
+                {{ component('Admin:AdminSkillItem', {
+                    label: skill.label,
+                    defaultColor: skill.defaultColor,
+                    position: skill.position,
+                    skillId: skill.id,
+                    userId: this.userId,
+                    componentId: "skill-" ~ skill.id
+                }) }}
+            {% endfor %}
+        </div>
+
+        <div class="divider divider-info divider-vertical"></div>
+
+        <label> Créer une compétence
+            <div class="join w-full">
+                <label for="label" class="floating-label w-full">
+                    <span>Label pour la compétence</span>
+                    <input
+                        name="label"
+                        data-model="skillLabel"
+                        type="text"
+                        placeholder="Label ex. PHP"
+                        class="input join-item validator w-full {% if this.errors is defined and this.errors.skillLabel is defined %}border-error{% endif %}"
+                        required
+                    />
+                    {% if this.errors is defined and this.errors.skillLabel is defined %}
+                        <p class="text-error text-xs mt-1">{{ this.errors.skillLabel }}</p>
+                    {% else %}
+                        <p class="validator-hint">Vous devez saisir un label</p>
+                    {% endif %}
+                </label>
+
+                <label for="defaultColor" class="floating-label w-full">
+                    <span>Couleur par défaut</span>
+                    <input
+                        name="defaultColor"
+                        data-model="skillDefaultColor"
+                        type="text"
+                        placeholder="#ffffff"
+                        class="input join-item validator w-full"
+                    />
+                    <p class="validator-hint">Couleur optionnelle</p>
+                </label>
+
+                <label for="position" class="floating-label w-full">
+                    <span>Position de la compétence</span>
+                    <input
+                        name="position"
+                        data-model="skillPosition"
+                        type="number"
+                        placeholder="0"
+                        class="input join-item validator w-full"
+                        required
+                    />
+                    <p class="validator-hint">Vous devez saisir une position</p>
+                </label>
+
+                <input type="hidden" name="userId" value="{{ this.userId }}"/>
+
+                <div>
+                    <button
+                        class="btn btn-primary join-item"
+                        data-action="click->live#action"
+                        data-live-action-param="save"
+                    >
+                        Ajouter
+                    </button>
+                </div>
+            </div>
+        </label>
+    </fieldset>
+</div>

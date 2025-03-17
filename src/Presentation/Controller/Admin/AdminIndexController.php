@@ -49,6 +49,7 @@ class AdminIndexController extends AbstractController
             [
                 'currentUserId' => $currentUser->getId(),
                 'socialNetworks' => $currentUser->getSocialNetworks()->toArray(),
+                'skills' => $currentUser->getSkills()->toArray(),
             ]
         );
     }
