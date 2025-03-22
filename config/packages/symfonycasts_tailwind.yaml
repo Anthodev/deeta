@@ -1,3 +1,2 @@
 symfonycasts_tailwind:
-    binary: 'node_modules/.bin/tailwindcss'
-    binary_version: 'v4.0.9'
+    binary_version: "v4.0.9"

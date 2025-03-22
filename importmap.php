@@ -25,13 +25,6 @@ return [
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
-    'daisyui' => [
-        'version' => '5.0.0-beta.9',
-    ],
-    'daisyui/daisyui.min.css' => [
-        'version' => '5.0.0-beta.9',
-        'type' => 'css',
-    ],
     'postcss' => [
         'version' => '8.5.3',
     ],
@@ -43,16 +36,6 @@ return [
     ],
     '@tailwindcss/postcss' => [
         'version' => '4.0.9',
-    ],
-    '@catppuccin/daisyui' => [
-        'version' => '1.2.1',
-    ],
-    '@catppuccin/palette' => [
-        'version' => '1.7.1',
-    ],
-    '@catppuccin/daisyui/dist/catppuccin.min.css' => [
-        'version' => '1.2.1',
-        'type' => 'css',
     ],
     '@hotwired/turbo' => [
         'version' => '7.3.0',
