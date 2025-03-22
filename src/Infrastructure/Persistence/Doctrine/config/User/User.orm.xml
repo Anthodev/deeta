@@ -67,6 +67,12 @@
             mapped-by="user"
         />
 
+        <one-to-many
+            field="skills"
+            target-entity="App\Domain\Model\Info\Skill"
+            mapped-by="user"
+        />
+
         <indexes>
             <index name="users_email" columns="email"/>
             <index name="users_username" columns="username"/>

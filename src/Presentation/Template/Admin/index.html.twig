@@ -6,10 +6,17 @@
             <h1>Hello {{ app.user.username }}!</h1>
         </div>
 
-        <div class="flex gap-6">
-            {{ component('Admin:MeInfo', {
-                user: app.user,
-            }) }}
+        <div class="flex">
+            <div class="flex-1 flex-col gap-6">
+                {{ component('Admin:MeInfo', {
+                    user: app.user,
+                }) }}
+
+                {{ component('Admin:AdminSkills', {
+                    userId: currentUserId,
+                    skills: skills,
+                }) }}
+            </div>
 
             <div class="divider lg:divider-horizontal"></div>
 

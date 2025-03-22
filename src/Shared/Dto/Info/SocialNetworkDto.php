@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Dto\Info;
 
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[Groups(['social_network'])]
 readonly class SocialNetworkDto
@@ -27,6 +27,9 @@ readonly class SocialNetworkDto
 
         #[Groups(['social_network'])]
         public string $userId,
+
+        #[Groups(['social_network'])]
+        public string $defaultColor = '',
     ) {
     }
 }
