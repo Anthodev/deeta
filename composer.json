@@ -9,9 +9,9 @@
         "php": ">=8.4.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/doctrine-bundle": "^2.13.2",
+        "doctrine/doctrine-bundle": "^2.14.0",
         "doctrine/doctrine-migrations-bundle": "^3.4.1",
-        "doctrine/orm": "^3.3.2",
+        "doctrine/orm": "^3.3.3",
         "lexik/jwt-authentication-bundle": "^3.1.1",
         "runtime/frankenphp-symfony": "^0.2.0",
         "symfony/asset": "7.2.*",
@@ -19,23 +19,23 @@
         "symfony/console": "7.2.*",
         "symfony/doctrine-messenger": "7.2.*",
         "symfony/dotenv": "7.2.*",
-        "symfony/flex": "^2.4.7",
+        "symfony/flex": "^2.5.0",
         "symfony/framework-bundle": "7.2.*",
         "symfony/messenger": "7.2.*",
         "symfony/runtime": "7.2.*",
         "symfony/security-bundle": "7.2.*",
         "symfony/serializer": "7.2.*",
-        "symfony/stimulus-bundle": "^2.23",
+        "symfony/stimulus-bundle": "^2.24",
         "symfony/twig-bundle": "7.2.*",
         "symfony/uid": "7.2.*",
-        "symfony/ux-icons": "^2.23",
-        "symfony/ux-live-component": "^2.23",
-        "symfony/ux-turbo": "^2.23",
+        "symfony/ux-icons": "^2.24",
+        "symfony/ux-live-component": "^2.24",
+        "symfony/ux-turbo": "^2.24",
         "symfony/validator": "7.2.*",
         "symfony/yaml": "7.2.*",
         "symfonycasts/tailwind-bundle": "^0.8.0",
-        "twig/extra-bundle": "^2.12|^3.20",
-        "twig/twig": "^2.12|^3.20"
+        "twig/extra-bundle": "^2.12|^3.21",
+        "twig/twig": "^2.12|^3.21.1"
     },
     "config": {
         "allow-plugins": {
@@ -91,17 +91,17 @@
         }
     },
     "require-dev": {
-        "dama/doctrine-test-bundle": "^8.2.2",
-        "doctrine/doctrine-fixtures-bundle": "^4.0",
+        "dama/doctrine-test-bundle": "^8.3.0",
+        "doctrine/doctrine-fixtures-bundle": "^4.1",
         "fakerphp/faker": "^1.24.1",
-        "pestphp/pest": "^3.7.4",
-        "phpstan/phpstan": "^2.1.6",
+        "pestphp/pest": "^3.8.2",
+        "phpstan/phpstan": "^2.1.14",
         "phpunit/php-code-coverage": "^11.0.9",
         "symfony/browser-kit": "7.2.*",
         "symfony/css-selector": "7.2.*",
-        "symfony/maker-bundle": "^1.62.1",
+        "symfony/maker-bundle": "^1.63.0",
         "symfony/stopwatch": "7.2.*",
         "symfony/web-profiler-bundle": "7.2.*",
-        "symplify/easy-coding-standard": "^12.5.8"
+        "symplify/easy-coding-standard": "^12.5.16"
     }
 }

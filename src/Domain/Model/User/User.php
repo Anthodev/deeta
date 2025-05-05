@@ -29,7 +29,7 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
     private Collection $skills;
 
     public ?string $fullName {
-        get => $this->firstName.' '. $this->lastName;
+        get => $this->firstName.' '.$this->lastName;
     }
 
     public function __construct(
