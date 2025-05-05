@@ -37,6 +37,9 @@
         <field name="location" type="string" column="location" length="255" nullable="true">
         </field>
 
+        <field name="profileImagePath" type="string" column="profile_image_path" length="255" nullable="true">
+        </field>
+
         <field name="enabled" type="integer" column="enabled">
             <options>
                 <option name="default">0</option>

@@ -51,7 +51,7 @@ jobs:
         run: symfony check:security
       -
         name: Generate Lexik JWT Keys
-        run: docker compose exec -T php bin/console -e test lexik:jwt:generate-keypair --overwrite -q
+        run: docker compose exec -T php php bin/console -e test lexik:jwt:generate-keypair --overwrite -q
       -
         name: Checking standards
         run: docker compose exec -T php vendor/bin/ecs check
@@ -63,7 +63,7 @@ jobs:
         run: docker compose exec -T php npm install
       -
         name: Generate Tailwind CSS build
-        run: docker compose exec -T php bin/console tailwind:build
+        run: docker compose exec -T php php bin/console tailwind:build
       -
         name: Check HTTP reachability
         run: curl -v --fail-with-body http://localhost
@@ -76,16 +76,16 @@ jobs:
         run: curl -vkI --fail-with-body https://localhost/.well-known/mercure?topic=test
       -
         name: Run migrations
-        run: docker compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
+        run: docker compose exec -T php php bin/console -e test doctrine:migrations:migrate --no-interaction
       -
         name: Load fixtures
-        run: docker compose exec -T php bin/console -e test doctrine:fixtures:load --no-interaction
+        run: docker compose exec -T php php bin/console -e test doctrine:fixtures:load --no-interaction
       -
         name: Run tests
         run: docker compose exec -T php vendor/bin/pest
       -
         name: Doctrine Schema Validator
-        run: docker compose exec -T php bin/console -e test doctrine:schema:validate --skip-sync -vvv --no-interaction
+        run: docker compose exec -T php php bin/console -e test doctrine:schema:validate --skip-sync -vvv --no-interaction
       -
         name: Dump docker logs on failure
         if: failure()
