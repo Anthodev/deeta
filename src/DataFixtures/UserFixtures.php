@@ -12,7 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const ADMIN_USER_REFERENCE = 'admin-user';
+    public const string ADMIN_USER_REFERENCE = 'admin-user';
 
     public function load(ObjectManager $manager): void
     {

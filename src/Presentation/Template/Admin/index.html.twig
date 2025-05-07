@@ -8,6 +8,14 @@
 
         <div class="flex">
             <div class="flex-1 flex-col gap-6">
+                {{ component('Admin:AdminProfilePicture', {
+                    userId: currentUserId,
+                    username: app.user.username,
+                    profileImageForm: profileImageForm,
+                    profilePicturePath: app.user.profileImagePath,
+                    key: 'admin-profile-picture-' ~ (app.user.profileImagePath ? 'exists' : 'deleted'),
+                }) }}
+
                 {{ component('Admin:MeInfo', {
                     user: app.user,
                 }) }}

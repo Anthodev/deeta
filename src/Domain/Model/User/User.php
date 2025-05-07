@@ -42,6 +42,7 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
         private ?string $location = null,
         private ?string $password = null,
         private ?string $plainPassword = null,
+        private ?string $profileImagePath = null,
         private int $enabled = 0,
         private ?Role $role = null,
     ) {
@@ -170,6 +171,18 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
     public function setPlainPassword(?string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    public function getProfileImagePath(): ?string
+    {
+        return $this->profileImagePath;
+    }
+
+    public function setProfileImagePath(?string $profileImagePath): self
+    {
+        $this->profileImagePath = $profileImagePath;
 
         return $this;
     }

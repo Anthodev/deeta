@@ -1,0 +1,29 @@
+<div {{ attributes }}
+    id="adminProfilePicture"
+    class="flex"
+>
+    <fieldset {{ stimulus_controller('profile-picture') }} class="fieldset flex w-full bg-base-200 border border-base-300 p-4 rounded-box">
+        <legend class="fieldset-legend">Profile picture</legend>
+
+        <div
+            class="flex flex-col w-1/4 justify-center my-auto {% if profilePicturePath == null %}hidden{% endif %}"
+        >
+            <div class="avatar mx-auto">
+                <div class="w-24 rounded-xl">
+                    <img src="{{ profilePicturePath ? asset(profilePicturePath) : '' }}" alt="avatar of {{ username }}">
+                </div>
+            </div>
+            <button
+                class="btn btn-sm btn-error mt-2 w-16 mx-auto"
+                data-profile-picture-target="deleteButton"
+                data-action="click->profile-picture#delete"
+            >
+                Delete
+            </button>
+        </div>
+
+        <div class="w-full h-full">
+            {{ form(profileImageForm) }}
+        </div>
+    </fieldset>
+</div>
