@@ -27,10 +27,7 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
      * @var Collection<int, Skill>
      */
     private Collection $skills;
-
-    public ?string $fullName {
-        get => $this->firstName.' '.$this->lastName;
-    }
+    private ?string $fullName = null;
 
     public function __construct(
         private string $email,
@@ -94,6 +91,7 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
     public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
+        $this->setFullName();
 
         return $this;
     }
@@ -106,13 +104,41 @@ class User implements ModelInterface, UserInterface, PasswordAuthenticatedUserIn
     public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
+        $this->setFullName();
 
         return $this;
     }
 
     public function getFullName(): ?string
     {
+        $this->setFullName();
+
         return $this->fullName;
+    }
+
+    private function setFullName(): self
+    {
+        if (null !== $this->firstName && null !== $this->lastName) {
+            $this->fullName = $this->firstName.' '.$this->lastName;
+
+            return $this;
+        }
+
+        if (null !== $this->firstName) {
+            $this->fullName = $this->firstName;
+
+            return $this;
+        }
+
+        if (null !== $this->lastName) {
+            $this->fullName = $this->lastName;
+
+            return $this;
+        }
+
+        $this->fullName = null;
+
+        return $this;
     }
 
     public function getJobTitle(): ?string

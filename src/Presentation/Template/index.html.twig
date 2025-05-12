@@ -1,11 +1,17 @@
 {% extends '@app/base.html.twig' %}
 
 {% block content %}
-    <div>
-        <h1>Hello there!</h1>
-    </div>
-
-    <div class="mt-8">
-        <a href="{{ path('app_admin_login') }}" class="btn btn-primary">Se connecter</a>
+    <div class="w-1/2 mx-auto">
+        {%  if user %}
+            {{ component('Public:UserInfo', {
+                'fullName': user.fullName,
+                'jobTitle': user.jobTitle,
+                'company': user.company,
+                'location': user.location,
+                'profileImagePath': user.profileImagePath,
+            }) }}
+        {% else %}
+            <p>No user found.</p>
+        {% endif %}
     </div>
 {% endblock %}
