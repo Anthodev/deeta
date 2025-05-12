@@ -1,0 +1,16 @@
+<div {{ attributes }} class="font-mono text-white">
+    <div class="card {{ profileImagePath ? 'card-side' : '' }} bg-base-100 shadow-sm bg-secondary">
+        {% if profileImagePath %}
+            <figure>
+                <img
+                    src="{{ profileImagePath }}"
+                    alt="avatar" />
+            </figure>
+        {% endif %}
+        <div class="card-body">
+            {% if fullName %}<h1 class="card-title text-3xl">{{ fullName }}</h1>{% endif %}
+            {% if jobTitle %}<h2 class="font-bold text-xl">{{ jobTitle }}</h2>{% endif %}
+            {% if company %}<h3 class="font-sans">{{ company }} {{ location ? '- '~location : '' }}</h3>{% endif %}
+        </div>
+    </div>
+</div>

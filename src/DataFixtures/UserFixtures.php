@@ -19,6 +19,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user = new User(
             email: 'admin@test.io',
             username: 'admin',
+            firstName: 'Admin',
+            lastName: 'Test',
             plainPassword: 'test',
             enabled: 1,
         );

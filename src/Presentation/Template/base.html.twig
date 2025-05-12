@@ -13,6 +13,16 @@
     </head>
     <body>
     {{ component('Common:FlashBag') }}
+    <div class="navbar bg-base-100 shadow-sm fixed-top z-10">
+        <div class="navbar-start"></div>
+        <div class="navbar-end">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ path('app_admin_index') }}" class="btn btn-dash btn-primary">Dashboard</a>
+            {% else %}
+                <a href="{{ path('app_admin_login') }}" class="btn btn-dash btn-primary">Se connecter</a>
+            {% endif %}
+        </div>
+    </div>
     <div class="flex flex-col items-center justify-center h-screen">
         <div class="container">
             {% block content %}
