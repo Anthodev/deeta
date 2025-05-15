@@ -10,6 +10,11 @@
             <custom-id-generator class="Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator"/>
         </id>
         <field name="label" type="string" column="label" length="255"/>
+        <field name="isTextWhite" type="boolean" column="is_text_white">
+            <options>
+                <option name="default">false</option>
+            </options>
+        </field>
         <field name="defaultColor" type="string" column="default_color" length="255" nullable="true" />
         <field name="position" type="integer" column="position">
             <options>

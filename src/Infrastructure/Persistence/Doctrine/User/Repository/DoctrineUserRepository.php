@@ -22,8 +22,10 @@ class DoctrineUserRepository extends DoctrineBaseEntityRepository implements Use
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneByEmailOrUsername(string $email, string $username): ?User
-    {
+    public function findOneByEmailOrUsername(
+        string $email,
+        string $username,
+    ): ?User {
         $query = $this->createQueryBuilder('u')
             ->where('u.email = :email')
             ->orWhere('u.username = :username')

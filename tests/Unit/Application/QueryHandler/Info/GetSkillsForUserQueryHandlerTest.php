@@ -66,17 +66,17 @@ it('returns skills for a user', function () {
         ->and($response->getContent())->toBeArray()
         ->and(count($response->getContent()))->toBe(2)
         ->and($response->getContent()[0])->toBeInstanceOf(SkillDto::class)
-        ->and($response->getContent()[0]->id)->toBe($skill1Id)
-        ->and($response->getContent()[0]->label)->toBe('PHP')
-        ->and($response->getContent()[0]->defaultColor)->toBe('#777BB3')
-        ->and($response->getContent()[0]->position)->toBe(1)
-        ->and($response->getContent()[0]->userId)->toBe($userId)
+        ->and($response->getContent()[0]->skillId)->toBe($skill1Id)
+        ->and($response->getContent()[0]->skillLabel)->toBe('PHP')
+        ->and($response->getContent()[0]->skillDefaultColor)->toBe('#777BB3')
+        ->and($response->getContent()[0]->skillPosition)->toBe(1)
+        ->and($response->getContent()[0]->skillUserId)->toBe($userId)
         ->and($response->getContent()[1])->toBeInstanceOf(SkillDto::class)
-        ->and($response->getContent()[1]->id)->toBe($skill2Id)
-        ->and($response->getContent()[1]->label)->toBe('JavaScript')
-        ->and($response->getContent()[1]->defaultColor)->toBe('#F7DF1E')
-        ->and($response->getContent()[1]->position)->toBe(2)
-        ->and($response->getContent()[1]->userId)->toBe($userId);
+        ->and($response->getContent()[1]->skillId)->toBe($skill2Id)
+        ->and($response->getContent()[1]->skillLabel)->toBe('JavaScript')
+        ->and($response->getContent()[1]->skillDefaultColor)->toBe('#F7DF1E')
+        ->and($response->getContent()[1]->skillPosition)->toBe(2)
+        ->and($response->getContent()[1]->skillUserId)->toBe($userId);
 });
 
 it('returns empty array when no skills found', function () {

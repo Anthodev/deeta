@@ -12,11 +12,11 @@ beforeEach(function () {
 it('normalizes a SocialNetworkDto object', function () {
     // Given
     $dto = new SocialNetworkDto(
-        id: '01H1234ABCD',
-        network: 'GITHUB',
-        label: 'GitHub',
-        url: 'https://github.com/test',
-        position: 1,
+        networkId: '01H1234ABCD',
+        networkIcon: 'GITHUB',
+        networkLabel: 'GitHub',
+        networkUrl: 'https://github.com/test',
+        networkPosition: 1,
         userId: '01HABCDEFGH'
     );
 
@@ -45,11 +45,11 @@ it('throws an exception when normalizing non-SocialNetworkDto object', function 
 it('supports normalization of SocialNetworkDto objects', function () {
     // Given
     $dto = new SocialNetworkDto(
-        id: '01H1234ABCD',
-        network: 'GITHUB',
-        label: 'GitHub',
-        url: 'https://github.com/test',
-        position: 1,
+        networkId: '01H1234ABCD',
+        networkIcon: 'GITHUB',
+        networkLabel: 'GitHub',
+        networkUrl: 'https://github.com/test',
+        networkPosition: 1,
         userId: '01HABCDEFGH'
     );
 
@@ -87,11 +87,11 @@ it('denormalizes an array to a SocialNetworkDto object', function () {
 
     // Then
     expect($result)->toBeInstanceOf(SocialNetworkDto::class);
-    expect($result->id)->toBe('01H1234ABCD');
-    expect($result->network)->toBe('GITHUB');
-    expect($result->label)->toBe('GitHub');
-    expect($result->url)->toBe('https://github.com/test');
-    expect($result->position)->toBe(1);
+    expect($result->networkId)->toBe('01H1234ABCD');
+    expect($result->networkIcon)->toBe('GITHUB');
+    expect($result->networkLabel)->toBe('GitHub');
+    expect($result->networkUrl)->toBe('https://github.com/test');
+    expect($result->networkPosition)->toBe(1);
     expect($result->userId)->toBe('01HABCDEFGH');
 });
 
@@ -107,11 +107,11 @@ it('denormalizes with missing fields setting default values', function () {
     // Then
     expect($result)
         ->toBeInstanceOf(SocialNetworkDto::class)
-        ->and($result->id)->toBe('')
-        ->and($result->network)->toBe('')
-        ->and($result->label)->toBe('GitHub')
-        ->and($result->url)->toBe('')
-        ->and($result->position)->toBe(0)
+        ->and($result->networkId)->toBe('')
+        ->and($result->networkIcon)->toBe('')
+        ->and($result->networkLabel)->toBe('GitHub')
+        ->and($result->networkUrl)->toBe('')
+        ->and($result->networkPosition)->toBe(0)
         ->and($result->userId)->toBe('');
 });
 
@@ -130,8 +130,8 @@ it('denormalizes with type coercion for position', function () {
     $result = $this->socialNetworkDtoNormalizer->denormalize($data, SocialNetworkDto::class);
 
     // Then
-    expect($result->position)->toBe(2);
-    expect($result->position)->toBeInt();
+    expect($result->networkPosition)->toBe(2);
+    expect($result->networkPosition)->toBeInt();
 });
 
 it('throws an exception when denormalizing non-array data', function () {

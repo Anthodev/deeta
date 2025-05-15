@@ -10,6 +10,7 @@ class CreateSkillCommand
         public readonly string $userId,
         public readonly string $label,
         public readonly int $position,
+        public readonly bool $isTextWhite,
         public readonly string $defaultColor = '',
     ) {
     }

@@ -11,11 +11,13 @@ it('normalizes a SkillDto correctly', function () {
     // Given
     $normalizer = new SkillDtoNormalizer();
     $skillDto = new SkillDto(
-        id: '01H1234ABCD',
-        label: 'PHP',
-        position: 1,
-        userId: '01HABCDEFGH',
-        defaultColor: '#777BB3'
+        skillId: '01H1234ABCD',
+        skillLabel: 'PHP',
+        skillPosition: 1,
+        skillUserId: '01HABCDEFGH',
+        skillIsTextWhite: true,
+        skillDefaultColor: '#777BB3',
+        __dto_type: 'skill',
     );
 
     // When
@@ -27,7 +29,9 @@ it('normalizes a SkillDto correctly', function () {
         'label' => 'PHP',
         'position' => 1,
         'userId' => '01HABCDEFGH',
+        'isTextWhite' => true,
         'defaultColor' => '#777BB3',
+        '__type' => 'skill',
     ]);
 });
 
@@ -35,11 +39,12 @@ it('supports normalization for SkillDto objects', function () {
     // Given
     $normalizer = new SkillDtoNormalizer();
     $skillDto = new SkillDto(
-        id: '01H1234ABCD',
-        label: 'PHP',
-        position: 1,
-        userId: '01HABCDEFGH',
-        defaultColor: '#777BB3',
+        skillId: '01H1234ABCD',
+        skillLabel: 'PHP',
+        skillPosition: 1,
+        skillUserId: '01HABCDEFGH',
+        skillIsTextWhite: true,
+        skillDefaultColor: '#777BB3',
     );
 
     // When/Then
@@ -55,6 +60,7 @@ it('denormalizes an array to a SkillDto correctly', function () {
         'label' => 'PHP',
         'position' => 1,
         'userId' => '01HABCDEFGH',
+        'isTextWhite' => true,
         'defaultColor' => '#777BB3',
     ];
 
@@ -64,11 +70,12 @@ it('denormalizes an array to a SkillDto correctly', function () {
     // Then
     expect($result)
         ->toBeInstanceOf(SkillDto::class)
-        ->and($result->id)->toBe('01H1234ABCD')
-        ->and($result->label)->toBe('PHP')
-        ->and($result->defaultColor)->toBe('#777BB3')
-        ->and($result->position)->toBe(1)
-        ->and($result->userId)->toBe('01HABCDEFGH');
+        ->and($result->skillId)->toBe('01H1234ABCD')
+        ->and($result->skillLabel)->toBe('PHP')
+        ->and($result->skillDefaultColor)->toBe('#777BB3')
+        ->and($result->skillPosition)->toBe(1)
+        ->and($result->skillUserId)->toBe('01HABCDEFGH')
+        ->and($result->skillIsTextWhite)->toBeTrue();
 });
 
 it('supports denormalization for SkillDto class', function () {

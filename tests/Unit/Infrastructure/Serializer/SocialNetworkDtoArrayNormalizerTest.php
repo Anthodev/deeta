@@ -22,20 +22,20 @@ beforeEach(function () {
 it('normalizes an array of SocialNetworkDto objects', function () {
     // Given
     $dto1 = new SocialNetworkDto(
-        id: '01H1234ABCD',
-        network: 'GITHUB',
-        label: 'GitHub',
-        url: 'https://github.com/test',
-        position: 1,
+        networkId: '01H1234ABCD',
+        networkIcon: 'GITHUB',
+        networkLabel: 'GitHub',
+        networkUrl: 'https://github.com/test',
+        networkPosition: 1,
         userId: '01H1234ABCD',
     );
 
     $dto2 = new SocialNetworkDto(
-        id: '01H5678EFGH',
-        network: 'LINKEDIN',
-        label: 'LinkedIn',
-        url: 'https://linkedin.com/in/test',
-        position: 2,
+        networkId: '01H5678EFGH',
+        networkIcon: 'LINKEDIN',
+        networkLabel: 'LinkedIn',
+        networkUrl: 'https://linkedin.com/in/test',
+        networkPosition: 2,
         userId: '01H1234ABCD',
     );
 
@@ -128,20 +128,20 @@ it('denormalizes an array of data to SocialNetworkDto objects', function () {
     $data2 = ['id' => '01H5678EFGH', 'label' => 'LinkedIn', 'network' => 'LINKEDIN', 'url' => 'https://linkedin.com/in/test'];
 
     $expectedDto1 = new SocialNetworkDto(
-        id: $data1['id'],
-        network: $data1['network'],
-        label: $data1['label'],
-        url: $data1['url'],
-        position: 0,
+        networkId: $data1['id'],
+        networkIcon: $data1['network'],
+        networkLabel: $data1['label'],
+        networkUrl: $data1['url'],
+        networkPosition: 0,
         userId: '01H1234ABCD',
     );
 
     $expectedDto2 = new SocialNetworkDto(
-        id: $data2['id'],
-        network: $data2['network'],
-        label: $data2['label'],
-        url: $data2['url'],
-        position: 0,
+        networkId: $data2['id'],
+        networkIcon: $data2['network'],
+        networkLabel: $data2['label'],
+        networkUrl: $data2['url'],
+        networkPosition: 0,
         userId: '01H5678EFGH',
     );
 

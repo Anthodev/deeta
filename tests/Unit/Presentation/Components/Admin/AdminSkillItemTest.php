@@ -25,6 +25,7 @@ beforeEach(function () {
 it('initializes correctly with mount method', function () {
     // Given
     $label = 'PHP';
+    $isTextWhite = false;
     $defaultColor = '#777BB3';
     $position = 1;
     $skillId = '01HSKILL01';
@@ -34,16 +35,18 @@ it('initializes correctly with mount method', function () {
     // When
     $this->component->mount(
         $label,
+        $isTextWhite,
         $defaultColor,
         $position,
         $skillId,
         $userId,
-        $componentId
+        $componentId,
     );
 
     // Then
     expect($this->component->label)
         ->toBe($label)
+        ->and($this->component->isTextWhite)->toBeFalse()
         ->and($this->component->defaultColor)->toBe($defaultColor)
         ->and($this->component->position)->toBe((string) $position)
         ->and($this->component->skillId)->toBe($skillId)

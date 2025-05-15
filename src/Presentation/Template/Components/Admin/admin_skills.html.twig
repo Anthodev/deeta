@@ -5,12 +5,14 @@
         <div class="flex flex-row justify-start gap-2">
             {% for skill in this.skills %}
                 {{ component('Admin:AdminSkillItem', {
-                    label: skill.label,
-                    defaultColor: skill.defaultColor,
-                    position: skill.position,
-                    skillId: skill.id,
+                    label: skill.skillLabel,
+                    isTextWhite: skill.skillIsTextWhite,
+                    defaultColor: skill.skillDefaultColor,
+                    position: skill.skillPosition,
+                    skillId: skill.skillId,
                     userId: this.userId,
-                    componentId: "skill-" ~ skill.id
+                    componentId: "skill-" ~ skill.skillId,
+                    key: "skill-" ~ skill.skillId,
                 }) }}
             {% endfor %}
         </div>
@@ -36,10 +38,10 @@
                     {% endif %}
                 </label>
 
-                <label for="defaultColor" class="floating-label w-full">
+                <label for="skillDefaultColor" class="floating-label w-full">
                     <span>Couleur par défaut</span>
                     <input
-                        name="defaultColor"
+                        name="skillDefaultColor"
                         data-model="skillDefaultColor"
                         type="text"
                         placeholder="#ffffff"
@@ -48,10 +50,20 @@
                     <p class="validator-hint">Couleur optionnelle</p>
                 </label>
 
-                <label for="position" class="floating-label w-full">
-                    <span>Position de la compétence</span>
+                <label for="skillIsTextWhite">
+                    <span>White text?</span>
                     <input
-                        name="position"
+                        type="checkbox"
+                        name="skillIsTextWhite"
+                        data-model="skillIsTextWhite"
+                        class="input join-item checkbox"
+                    />
+                </label>
+
+                <label for="skillPosition" class="floating-label w-full">
+                    <span>Position</span>
+                    <input
+                        name="skillPosition"
                         data-model="skillPosition"
                         type="number"
                         placeholder="0"
@@ -61,7 +73,7 @@
                     <p class="validator-hint">Vous devez saisir une position</p>
                 </label>
 
-                <input type="hidden" name="userId" value="{{ this.userId }}"/>
+                <input type="hidden" name="skillUserId" value="{{ this.userId }}"/>
 
                 <div>
                     <button

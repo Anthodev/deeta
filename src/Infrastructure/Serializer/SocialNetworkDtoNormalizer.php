@@ -22,11 +22,11 @@ class SocialNetworkDtoNormalizer implements NormalizerInterface, DenormalizerInt
         }
 
         return [
-            'id' => $object->id,
-            'network' => $object->network,
-            'label' => $object->label,
-            'url' => $object->url,
-            'position' => $object->position,
+            'id' => $object->networkId,
+            'network' => $object->networkIcon,
+            'label' => $object->networkLabel,
+            'url' => $object->networkUrl,
+            'position' => $object->networkPosition,
             'userId' => $object->userId,
         ];
     }
@@ -56,11 +56,11 @@ class SocialNetworkDtoNormalizer implements NormalizerInterface, DenormalizerInt
         $userId = isset($data['userId']) && is_string($data['userId']) ? $data['userId'] : '';
 
         return new SocialNetworkDto(
-            id: $id,
-            network: $network,
-            label: $label,
-            url: $url,
-            position: $position,
+            networkId: $id,
+            networkIcon: $network,
+            networkLabel: $label,
+            networkUrl: $url,
+            networkPosition: $position,
             userId: $userId,
         );
     }

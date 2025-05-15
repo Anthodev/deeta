@@ -1,9 +1,12 @@
 services:
     App\Infrastructure\Serializer\SocialNetworkDtoNormalizer:
-        tags: ['serializer.normalizer']
+        tags:
+            - { name: 'serializer.normalizer', priority: 100 }
 
     App\Infrastructure\Serializer\SocialNetworkDtoArrayNormalizer:
-        tags: ['serializer.normalizer']
+        tags:
+            - { name: 'serializer.normalizer', priority: 90 }
 
     App\Infrastructure\Serializer\SkillDtoNormalizer:
-        tags: ['serializer.normalizer']
+        tags:
+            - { name: 'serializer.normalizer', priority: 80 }

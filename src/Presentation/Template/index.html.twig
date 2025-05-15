@@ -1,15 +1,25 @@
 {% extends '@app/base.html.twig' %}
 
 {% block content %}
-    <div class="w-1/2 mx-auto">
+    <div class="flex w-1/2 mx-auto grid gap-2">
         {%  if user %}
-            {{ component('Public:UserInfo', {
-                'fullName': user.fullName,
-                'jobTitle': user.jobTitle,
-                'company': user.company,
-                'location': user.location,
-                'profileImagePath': user.profileImagePath,
-            }) }}
+            {% set hasSkills = user.skills|length > 0 %}
+            <div class="flex w-full gap-2">
+                {{ component('Public:UserInfo', {
+                    'fullName': user.fullName,
+                    'jobTitle': user.jobTitle,
+                    'company': user.company,
+                    'location': user.location,
+                    'profileImagePath': user.profileImagePath,
+                    'hasSkills': hasSkills,
+                }) }}
+
+                {% if hasSkills %}
+                    {{ include('@app/Public/partials/_user_skills.html.twig', {
+                        'skills': userSortedSkills,
+                    }) }}
+                {% endif %}
+            </div>
         {% else %}
             <p>No user found.</p>
         {% endif %}

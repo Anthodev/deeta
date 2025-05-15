@@ -35,16 +35,20 @@ final class AdminSkills
      */
     #[LiveProp(
         writable: false,
-        useSerializerForHydration: true,
+        hydrateWith: 'hydrateSkills',
+        dehydrateWith: 'dehydrateSkills',
         serializationContext: [
             'groups' => ['skill'],
             'item_type' => SkillDto::class,
-        ]
+        ],
     )]
     public array $skills = [];
 
     #[LiveProp(writable: true)]
     public string $skillLabel = '';
+
+    #[LiveProp(writable: true)]
+    public bool $skillIsTextWhite = false;
 
     #[LiveProp(writable: true)]
     public string $skillDefaultColor = '';
@@ -75,11 +79,12 @@ final class AdminSkills
         $this->userId = $userId;
         $this->skills = array_map(
             fn (Skill $skill): SkillDto => new SkillDto(
-                id: $skill->getId() ?? '',
-                label: $skill->getLabel(),
-                position: $skill->getPosition(),
-                userId: $skill->getUser()->getId() ?? '',
-                defaultColor: $skill->getDefaultColor() ?? '',
+                skillId: $skill->getId() ?? '',
+                skillLabel: $skill->getLabel(),
+                skillPosition: $skill->getPosition(),
+                skillUserId: $skill->getUser()->getId() ?? '',
+                skillIsTextWhite: $skill->getIsTextWhite(),
+                skillDefaultColor: $skill->getDefaultColor() ?? '',
             ),
             $skills
         );
@@ -116,6 +121,7 @@ final class AdminSkills
                 ]);
 
             $this->resetForm();
+            $this->refreshSkills();
 
             return;
         }
@@ -124,6 +130,7 @@ final class AdminSkills
             userId: $userId,
             label: $this->skillLabel,
             position: $this->skillPosition,
+            isTextWhite: $this->skillIsTextWhite,
             defaultColor: $this->skillDefaultColor,
         ));
 
@@ -163,6 +170,7 @@ final class AdminSkills
     private function resetForm(): void
     {
         $this->skillLabel = '';
+        $this->skillIsTextWhite = false;
         $this->skillDefaultColor = '';
         $this->skillPosition = 0;
         $this->errors = [];
@@ -205,12 +213,68 @@ final class AdminSkills
                 return [];
             }
 
+            $validSkills = [];
+
+            foreach ($content as $item) {
+                if ($item instanceof SkillDto) {
+                    $validSkills[] = $item;
+                } else {
+                    $itemType = is_object($item) ? get_class($item) : gettype($item);
+                    $this->logger->error('Type d\'objet incorrect dans les compétences: '.$itemType);
+                }
+            }
+
             /** @var array<int, SkillDto> */
-            return $content;
+            return $validSkills;
         } catch (\Throwable $e) {
             $this->logger->error('Erreur lors de la récupération des compétences: '.$e->getMessage());
 
             return [];
         }
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function dehydrateSkills(): array
+    {
+        return array_map(
+            fn (SkillDto $skill): array => [
+                'skillId' => $skill->skillId,
+                'skillLabel' => $skill->skillLabel,
+                'skillPosition' => $skill->skillPosition,
+                'skillUserId' => $skill->skillUserId,
+                'skillIsTextWhite' => $skill->skillIsTextWhite,
+                'skillDefaultColor' => $skill->skillDefaultColor,
+                '__dto_type' => 'skill',
+            ],
+            $this->skills
+        );
+    }
+
+    /**
+     * @param array<mixed> $data
+     *
+     * @return array<int, SkillDto>
+     */
+    public function hydrateSkills(array $data): array
+    {
+        $skills = [];
+        foreach ($data as $item) {
+            if (is_array($item) && ($item['__dto_type'] ?? '') === 'skill') {
+                $skills[] = new SkillDto(
+                    skillId: $item['skillId'] ?? '',
+                    skillLabel: $item['skillLabel'] ?? '',
+                    skillPosition: (int) ($item['skillPosition'] ?? 0),
+                    skillUserId: $item['skillUserId'] ?? '',
+                    skillIsTextWhite: (bool) ($item['skillIsTextWhite'] ?? false),
+                    skillDefaultColor: $item['skillDefaultColor'] ?? '',
+                );
+            } else {
+                $this->logger->error('Type d\'objet incorrect dans les compétences lors de l\'hydratation');
+            }
+        }
+
+        return $skills;
     }
 }

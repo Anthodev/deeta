@@ -78,22 +78,24 @@ class AdminIndexController extends AbstractController
 
             /** @var string $projectDir */
             $projectDir = $this->getParameter('kernel.project_dir');
-            /** @var string $profilePictureProjectPath */
-            $profilePictureProjectPath = $this->getParameter('app.profile_picture_path');
+            /** @var string $profilePictureSystemPath */
+            $profilePictureSystemPath = $this->getParameter('app.profile_picture_path');
 
-            $profilePictureProjectPath = $projectDir.'/public/'.$profilePictureProjectPath;
+            $profilePicturePublicPath = $profilePictureSystemPath;
+            $profilePictureSystemPath = $projectDir.'/public/'.$profilePictureSystemPath;
 
-            if (!file_exists($profilePictureProjectPath)) {
-                $fileSystem->mkdir($profilePictureProjectPath);
+            if (!file_exists($profilePictureSystemPath)) {
+                $fileSystem->mkdir($profilePictureSystemPath);
             }
 
-            $filePath = $profilePictureProjectPath.'/'.$newFilename;
+            $profilePicturePublicFilePath = $profilePicturePublicPath.'/'.$newFilename;
+            $filePath = $profilePictureSystemPath.'/'.$newFilename;
             $fileSystem->rename($file->getPathname(), $filePath);
 
             $messageBus->dispatch(new UpdateUserProfilePictureCommand(
                 userId: $securityUserId,
                 newFilename: $newFilename,
-                profilePicturePath: $filePath,
+                profilePicturePath: $profilePicturePublicFilePath,
             ));
 
             $this->addFlash(FlashBag::TYPE_SUCCESS, 'Profile picture updated');

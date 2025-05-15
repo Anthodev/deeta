@@ -28,11 +28,11 @@ class GetSocialNetworksForUserQueryHandler
         /** @var SocialNetwork $socialNetwork */
         foreach ($socialNetworks as $socialNetwork) {
             $socialNetworkDtos[] = new SocialNetworkDto(
-                id: $socialNetwork->getId() ?? '',
-                network: $socialNetwork->getNetwork(),
-                label: $socialNetwork->getLabel(),
-                url: $socialNetwork->getUrl(),
-                position: $socialNetwork->getPosition() ?? 0,
+                networkId: $socialNetwork->getId() ?? '',
+                networkIcon: $socialNetwork->getNetwork(),
+                networkLabel: $socialNetwork->getLabel(),
+                networkUrl: $socialNetwork->getUrl(),
+                networkPosition: $socialNetwork->getPosition() ?? 0,
                 userId: $socialNetwork->getUser()->getId() ?? '',
             );
         }

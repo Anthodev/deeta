@@ -31,8 +31,9 @@ class CreateSkillCommandHandler
 
         $skill = new Skill(
             label: $command->label,
-            defaultColor: $command->defaultColor,
             user: $user,
+            isTextWhite: $command->isTextWhite,
+            defaultColor: $command->defaultColor,
             position: $command->position,
         );
 

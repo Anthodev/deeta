@@ -1,0 +1,9 @@
+<div class="font-mono w-1/3">
+    <div class="card shadow-sm bg-slate-500 flex flex-row flex-wrap justify-start content-start gap-2 p-4 h-full">
+        {% for skill in skills %}
+            <div class="badge text-gray-700 pb-0 mb-0 {{ skill.isTextWhite ? 'text-white' : 'text-black' }}" style="background-color: {{ skill.defaultColor ? skill.defaultColor : 'var(--color-primary)' }}">
+                {{ skill.label }}
+            </div>
+        {% endfor %}
+    </div>
+</div>

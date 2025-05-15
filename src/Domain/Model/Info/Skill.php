@@ -17,6 +17,7 @@ class Skill implements ModelInterface
     public function __construct(
         private string $label,
         private User $user,
+        private bool $isTextWhite = false,
         private ?string $defaultColor = null,
         private int $position = 0,
     ) {
@@ -42,6 +43,18 @@ class Skill implements ModelInterface
     public function setLabel(string $label): self
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    public function getIsTextWhite(): bool
+    {
+        return $this->isTextWhite;
+    }
+
+    public function setIsTextWhite(bool $isTextWhite): self
+    {
+        $this->isTextWhite = $isTextWhite;
 
         return $this;
     }

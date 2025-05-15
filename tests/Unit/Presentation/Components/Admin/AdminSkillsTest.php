@@ -75,17 +75,17 @@ it('mounts with correct data transformation', function () {
         ->and($this->component->skills)->toBeArray()
         ->and(count($this->component->skills))->toBe(2)
         ->and($this->component->skills[0])->toBeInstanceOf(SkillDto::class)
-        ->and($this->component->skills[0]->id)->toBe($skill1Id)
-        ->and($this->component->skills[0]->label)->toBe('PHP')
-        ->and($this->component->skills[0]->defaultColor)->toBe('#777BB3')
-        ->and($this->component->skills[0]->position)->toBe(1)
-        ->and($this->component->skills[0]->userId)->toBe($userId)
+        ->and($this->component->skills[0]->skillId)->toBe($skill1Id)
+        ->and($this->component->skills[0]->skillLabel)->toBe('PHP')
+        ->and($this->component->skills[0]->skillDefaultColor)->toBe('#777BB3')
+        ->and($this->component->skills[0]->skillPosition)->toBe(1)
+        ->and($this->component->skills[0]->skillUserId)->toBe($userId)
         ->and($this->component->skills[1])->toBeInstanceOf(SkillDto::class)
-        ->and($this->component->skills[1]->id)->toBe($skill2Id)
-        ->and($this->component->skills[1]->label)->toBe('JavaScript')
-        ->and($this->component->skills[1]->defaultColor)->toBe('#F7DF1E')
-        ->and($this->component->skills[1]->position)->toBe(2)
-        ->and($this->component->skills[1]->userId)->toBe($userId);
+        ->and($this->component->skills[1]->skillId)->toBe($skill2Id)
+        ->and($this->component->skills[1]->skillLabel)->toBe('JavaScript')
+        ->and($this->component->skills[1]->skillDefaultColor)->toBe('#F7DF1E')
+        ->and($this->component->skills[1]->skillPosition)->toBe(2)
+        ->and($this->component->skills[1]->skillUserId)->toBe($userId);
 });
 
 it('validates form fields and sets errors', function () {

@@ -16,11 +16,13 @@ beforeEach(function () {
 it('normalizes a SkillDto object correctly', function () {
     // Given
     $dto = new SkillDto(
-        id: '01H1234ABCD',
-        label: 'PHP',
-        position: 1,
-        userId: '01HABCDEFGH',
-        defaultColor: '#777BB3',
+        skillId: '01H1234ABCD',
+        skillLabel: 'PHP',
+        skillPosition: 1,
+        skillUserId: '01HABCDEFGH',
+        skillIsTextWhite: false,
+        skillDefaultColor: '#777BB3',
+        __dto_type: 'skill',
     );
 
     // When
@@ -33,7 +35,9 @@ it('normalizes a SkillDto object correctly', function () {
         'label' => 'PHP',
         'position' => 1,
         'userId' => '01HABCDEFGH',
+        'isTextWhite' => false,
         'defaultColor' => '#777BB3',
+        '__type' => 'skill',
     ]);
 });
 
@@ -44,7 +48,9 @@ it('denormalizes JSON to a SkillDto object correctly', function () {
         'label' => 'PHP',
         'position' => 1,
         'userId' => '01HABCDEFGH',
+        'isTextWhite' => false,
         'defaultColor' => '#777BB3',
+        '__type' => 'skill',
     ]);
 
     // When
@@ -53,9 +59,10 @@ it('denormalizes JSON to a SkillDto object correctly', function () {
     // Then
     expect($dto)
         ->toBeInstanceOf(SkillDto::class)
-        ->and($dto->id)->toBe('01H1234ABCD')
-        ->and($dto->label)->toBe('PHP')
-        ->and($dto->defaultColor)->toBe('#777BB3')
-        ->and($dto->position)->toBe(1)
-        ->and($dto->userId)->toBe('01HABCDEFGH');
+        ->and($dto->skillId)->toBe('01H1234ABCD')
+        ->and($dto->skillLabel)->toBe('PHP')
+        ->and($dto->skillDefaultColor)->toBe('#777BB3')
+        ->and($dto->skillPosition)->toBe(1)
+        ->and($dto->skillUserId)->toBe('01HABCDEFGH')
+        ->and($dto->skillIsTextWhite)->toBeFalse();
 });

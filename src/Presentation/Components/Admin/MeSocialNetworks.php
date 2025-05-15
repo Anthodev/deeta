@@ -85,11 +85,11 @@ final class MeSocialNetworks
         $this->userId = $userId;
         $this->socialNetworks = array_map(
             fn (SocialNetwork $socialNetwork): SocialNetworkDto => new SocialNetworkDto(
-                id: $socialNetwork->getId() ?? '',
-                network: $socialNetwork->getNetwork(),
-                label: $socialNetwork->getLabel(),
-                url: $socialNetwork->getUrl(),
-                position: $socialNetwork->getPosition() ?? 0,
+                networkId: $socialNetwork->getId() ?? '',
+                networkIcon: $socialNetwork->getNetwork(),
+                networkLabel: $socialNetwork->getLabel(),
+                networkUrl: $socialNetwork->getUrl(),
+                networkPosition: $socialNetwork->getPosition() ?? 0,
                 userId: $socialNetwork->getUser()->getId() ?? '',
             ),
             $socialNetworks
@@ -212,8 +212,19 @@ final class MeSocialNetworks
                 return [];
             }
 
+            $validSocialNetworks = [];
+
+            foreach ($content as $item) {
+                if ($item instanceof SocialNetworkDto) {
+                    $validSocialNetworks[] = $item;
+                } else {
+                    $itemType = is_object($item) ? get_class($item) : gettype($item);
+                    $this->logger->error('Type d\'objet incorrect dans les compétences: '.$itemType);
+                }
+            }
+
             /** @var array<int, SocialNetworkDto> */
-            return $content;
+            return $validSocialNetworks;
         } catch (\Throwable $e) {
             $this->logger->error('Error getting social networks: '.$e->getMessage());
 

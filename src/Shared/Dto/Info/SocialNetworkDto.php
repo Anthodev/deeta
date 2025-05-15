@@ -10,26 +10,14 @@ use Symfony\Component\Serializer\Attribute\Groups;
 readonly class SocialNetworkDto
 {
     public function __construct(
-        #[Groups(['social_network'])]
-        public string $id,
-
-        #[Groups(['social_network'])]
-        public string $network,
-
-        #[Groups(['social_network'])]
-        public string $label,
-
-        #[Groups(['social_network'])]
-        public string $url,
-
-        #[Groups(['social_network'])]
-        public int $position,
-
-        #[Groups(['social_network'])]
+        public string $networkId,
+        public string $networkIcon,
+        public string $networkLabel,
+        public string $networkUrl,
+        public int $networkPosition,
         public string $userId,
-
-        #[Groups(['social_network'])]
-        public string $defaultColor = '',
+        public string $networkDefaultColor = '',
+        public string $__dto_type = 'social_network',
     ) {
     }
 }

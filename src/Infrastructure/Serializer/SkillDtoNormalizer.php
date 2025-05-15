@@ -22,11 +22,13 @@ class SkillDtoNormalizer implements NormalizerInterface, DenormalizerInterface
         }
 
         return [
-            'id' => $object->id,
-            'label' => $object->label,
-            'position' => $object->position,
-            'userId' => $object->userId,
-            'defaultColor' => $object->defaultColor,
+            'id' => $object->skillId,
+            'label' => $object->skillLabel,
+            'position' => $object->skillPosition,
+            'userId' => $object->skillUserId,
+            'isTextWhite' => $object->skillIsTextWhite,
+            'defaultColor' => $object->skillDefaultColor,
+            '__type' => 'skill',
         ];
     }
 
@@ -51,14 +53,16 @@ class SkillDtoNormalizer implements NormalizerInterface, DenormalizerInterface
         $label = isset($data['label']) && is_string($data['label']) ? $data['label'] : '';
         $position = isset($data['position']) && (is_int($data['position']) || is_string($data['position'])) ? (int) $data['position'] : 0;
         $userId = isset($data['userId']) && is_string($data['userId']) ? $data['userId'] : '';
+        $isTextWhite = isset($data['isTextWhite']) && (is_bool($data['isTextWhite']) || in_array($data['isTextWhite'], ['0', '1', 0, 1], true)) ? (bool) $data['isTextWhite'] : false;
         $defaultColor = isset($data['defaultColor']) && is_string($data['defaultColor']) ? $data['defaultColor'] : '';
 
         return new SkillDto(
-            id: $id,
-            label: $label,
-            position: $position,
-            userId: $userId,
-            defaultColor: $defaultColor,
+            skillId: $id,
+            skillLabel: $label,
+            skillPosition: $position,
+            skillUserId: $userId,
+            skillIsTextWhite: $isTextWhite,
+            skillDefaultColor: $defaultColor
         );
     }
 
@@ -67,7 +71,7 @@ class SkillDtoNormalizer implements NormalizerInterface, DenormalizerInterface
      */
     public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
-        return SkillDto::class === $type || 'App\Shared\Dto\Info\SkillDto' === $type && is_array($data);
+        return SkillDto::class === $type || 'App\Shared\Dto\Info\SkillDto' === $type;
     }
 
     /**
