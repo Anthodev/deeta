@@ -18,19 +18,19 @@ it('normalizes an array of SocialNetworkDto objects correctly', function () {
     // Given
     $dtos = [
         new SocialNetworkDto(
-            id: '01H1234ABCD',
-            network: 'GITHUB',
-            label: 'GitHub',
-            url: 'https://github.com/test',
-            position: 1,
+            networkId: '01H1234ABCD',
+            networkIcon: 'GITHUB',
+            networkLabel: 'GitHub',
+            networkUrl: 'https://github.com/test',
+            networkPosition: 1,
             userId: '01HABCDEFGH'
         ),
         new SocialNetworkDto(
-            id: '01H5678EFGH',
-            network: 'LINKEDIN',
-            label: 'LinkedIn',
-            url: 'https://linkedin.com/in/test',
-            position: 2,
+            networkId: '01H5678EFGH',
+            networkIcon: 'LINKEDIN',
+            networkLabel: 'LinkedIn',
+            networkUrl: 'https://linkedin.com/in/test',
+            networkPosition: 2,
             userId: '01HABCDEFGH'
         ),
     ];
@@ -89,19 +89,21 @@ it('denormalizes JSON to an array of SocialNetworkDto objects correctly', functi
         ->toBeArray()
         ->and(count($dtos))->toBe(2)
         ->and($dtos[0])->toBeInstanceOf(SocialNetworkDto::class)
-        ->and($dtos[0]->id)->toBe('01H1234ABCD')
-        ->and($dtos[0]->network)->toBe('GITHUB')
-        ->and($dtos[0]->label)->toBe('GitHub')
-        ->and($dtos[0]->url)->toBe('https://github.com/test')
-        ->and($dtos[0]->position)->toBe(1)
+        ->and($dtos[0]->networkId)->toBe('01H1234ABCD')
+        ->and($dtos[0]->networkIcon)->toBe('GITHUB')
+        ->and($dtos[0]->networkLabel)->toBe('GitHub')
+        ->and($dtos[0]->networkUrl)->toBe('https://github.com/test')
+        ->and($dtos[0]->networkPosition)->toBe(1)
         ->and($dtos[0]->userId)->toBe('01HABCDEFGH')
+        ->and($dtos[0]->__dto_type)->toBe('social_network')
         ->and($dtos[1])->toBeInstanceOf(SocialNetworkDto::class)
-        ->and($dtos[1]->id)->toBe('01H5678EFGH')
-        ->and($dtos[1]->network)->toBe('LINKEDIN')
-        ->and($dtos[1]->label)->toBe('LinkedIn')
-        ->and($dtos[1]->url)->toBe('https://linkedin.com/in/test')
-        ->and($dtos[1]->position)->toBe(2)
-        ->and($dtos[1]->userId)->toBe('01HABCDEFGH');
+        ->and($dtos[1]->networkId)->toBe('01H5678EFGH')
+        ->and($dtos[1]->networkIcon)->toBe('LINKEDIN')
+        ->and($dtos[1]->networkLabel)->toBe('LinkedIn')
+        ->and($dtos[1]->networkUrl)->toBe('https://linkedin.com/in/test')
+        ->and($dtos[1]->networkPosition)->toBe(2)
+        ->and($dtos[1]->userId)->toBe('01HABCDEFGH')
+        ->and($dtos[1]->__dto_type)->toBe('social_network');
 });
 
 it('loads social networks from fixtures and normalizes them to an array of DTOs', function () {
@@ -115,11 +117,11 @@ it('loads social networks from fixtures and normalizes them to an array of DTOs'
 
     foreach ($socialNetworks as $socialNetwork) {
         $dto = new SocialNetworkDto(
-            id: $socialNetwork->getId(),
-            network: $socialNetwork->getNetwork(),
-            label: $socialNetwork->getLabel(),
-            url: $socialNetwork->getUrl(),
-            position: $socialNetwork->getPosition(),
+            networkId: $socialNetwork->getId(),
+            networkIcon: $socialNetwork->getNetwork(),
+            networkLabel: $socialNetwork->getLabel(),
+            networkUrl: $socialNetwork->getUrl(),
+            networkPosition: $socialNetwork->getPosition(),
             userId: $adminUser->getId()
         );
 

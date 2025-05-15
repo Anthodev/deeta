@@ -1,9 +1,9 @@
-<div {{ attributes }} class="font-mono text-white">
+<div {{ attributes }} class="font-mono text-white {{ hasSkills ? 'w-2/3' : 'w-full' }}">
     <div class="card {{ profileImagePath ? 'card-side' : '' }} bg-base-100 shadow-sm bg-secondary">
         {% if profileImagePath %}
-            <figure>
+            <figure class="avatar w-36">
                 <img
-                    src="{{ profileImagePath }}"
+                    src="{{ asset(profileImagePath) }}"
                     alt="avatar" />
             </figure>
         {% endif %}

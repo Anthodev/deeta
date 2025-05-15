@@ -80,14 +80,14 @@ it('mounts with correct data transformation', function () {
         ->and($this->component->socialNetworks)->toBeArray()
         ->and(count($this->component->socialNetworks))->toBe(2)
         ->and($this->component->socialNetworks[0])->toBeInstanceOf(SocialNetworkDto::class)
-        ->and($this->component->socialNetworks[0]->id)->toBe($socialNetwork1Id)
-        ->and($this->component->socialNetworks[0]->network)->toBe('GITHUB')
-        ->and($this->component->socialNetworks[0]->label)->toBe('GitHub')
-        ->and($this->component->socialNetworks[0]->url)->toBe('https://github.com/user')
-        ->and($this->component->socialNetworks[0]->position)->toBe(1)
+        ->and($this->component->socialNetworks[0]->networkId)->toBe($socialNetwork1Id)
+        ->and($this->component->socialNetworks[0]->networkIcon)->toBe('GITHUB')
+        ->and($this->component->socialNetworks[0]->networkLabel)->toBe('GitHub')
+        ->and($this->component->socialNetworks[0]->networkUrl)->toBe('https://github.com/user')
+        ->and($this->component->socialNetworks[0]->networkPosition)->toBe(1)
         ->and($this->component->socialNetworks[0]->userId)->toBe($userId)
         ->and($this->component->socialNetworks[1])->toBeInstanceOf(SocialNetworkDto::class)
-        ->and($this->component->socialNetworks[1]->id)->toBe($socialNetwork2Id)
-        ->and($this->component->socialNetworks[1]->network)->toBe('LINKEDIN')
-        ->and($this->component->socialNetworks[1]->label)->toBe('LinkedIn');
+        ->and($this->component->socialNetworks[1]->networkId)->toBe($socialNetwork2Id)
+        ->and($this->component->socialNetworks[1]->networkIcon)->toBe('LINKEDIN')
+        ->and($this->component->socialNetworks[1]->networkLabel)->toBe('LinkedIn');
 });

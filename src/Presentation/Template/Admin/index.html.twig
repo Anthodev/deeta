@@ -19,19 +19,21 @@
                 {{ component('Admin:MeInfo', {
                     user: app.user,
                 }) }}
-
-                {{ component('Admin:AdminSkills', {
-                    userId: currentUserId,
-                    skills: skills,
-                }) }}
             </div>
 
             <div class="divider lg:divider-horizontal"></div>
 
-            {{ component('Admin:MeSocialNetworks', {
-                userId: currentUserId,
-                socialNetworks: socialNetworks,
-            }) }}
+            <div class="flex-1 flex-col gap-6">
+                {{ component('Admin:AdminSkills', {
+                    userId: currentUserId,
+                    skills: skills,
+                }) }}
+
+                {{ component('Admin:MeSocialNetworks', {
+                    userId: currentUserId,
+                    socialNetworks: socialNetworks,
+                }) }}
+            </div>
         </div>
 
         <div class="flex mt-8 justify-center">

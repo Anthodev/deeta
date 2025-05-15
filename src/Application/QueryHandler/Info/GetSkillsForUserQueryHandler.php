@@ -28,11 +28,12 @@ class GetSkillsForUserQueryHandler
         /** @var Skill $skill */
         foreach ($skills as $skill) {
             $skillDtos[] = new SkillDto(
-                id: $skill->getId() ?? '',
-                label: $skill->getLabel(),
-                position: $skill->getPosition(),
-                userId: $skill->getUser()->getId() ?? '',
-                defaultColor: $skill->getDefaultColor() ?? '',
+                skillId: $skill->getId() ?? '',
+                skillLabel: $skill->getLabel(),
+                skillPosition: $skill->getPosition(),
+                skillUserId: $skill->getUser()->getId() ?? '',
+                skillIsTextWhite: $skill->getIsTextWhite(),
+                skillDefaultColor: $skill->getDefaultColor() ?? '',
             );
         }
 

@@ -32,8 +32,9 @@ it('can create a skill', function () {
     $command = new CreateSkillCommand(
         userId: $userId,
         label: 'PHP',
-        defaultColor: '#777BB3',
         position: 1,
+        isTextWhite: false,
+        defaultColor: '#777BB3',
     );
 
     $this->userRepository
@@ -62,8 +63,9 @@ it('cannot create a skill for a user that does not exist', function () {
     $command = new CreateSkillCommand(
         userId: $userId,
         label: 'PHP',
-        defaultColor: '#777BB3',
         position: 1,
+        isTextWhite: false,
+        defaultColor: '#777BB3',
     );
 
     $this->userRepository

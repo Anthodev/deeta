@@ -24,6 +24,9 @@ final class AdminSkillItem
     public string $label = '';
 
     #[LiveProp(writable: true, useSerializerForHydration: true)]
+    public bool $isTextWhite = false;
+
+    #[LiveProp(writable: true, useSerializerForHydration: true)]
     public ?string $defaultColor = null;
 
     #[LiveProp(writable: true, useSerializerForHydration: true)]
@@ -46,6 +49,7 @@ final class AdminSkillItem
 
     public function mount(
         string $label,
+        bool $isTextWhite,
         ?string $defaultColor,
         int $position,
         string $skillId,
@@ -53,6 +57,7 @@ final class AdminSkillItem
         string $componentId = '',
     ): void {
         $this->label = $label;
+        $this->isTextWhite = $isTextWhite;
         $this->defaultColor = $defaultColor;
         $this->position = (string) $position;
         $this->skillId = $skillId;
@@ -77,7 +82,6 @@ final class AdminSkillItem
                 ]
             );
 
-            // Émettre un événement pour mettre à jour la liste des compétences
             $this->emit('skill-deleted');
         } catch (\Exception $exception) {
             $this->logger->error('Erreur lors de la suppression de la compétence: '.$exception->getMessage());
