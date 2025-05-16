@@ -1,0 +1,15 @@
+<div class="font-mono w-full flex flex-col gap-3">
+    {% for socialNetwork in socialNetworks %}
+        {% set socialNetworkIcon = enum('App\\Shared\\Enum\\SocialNetworkEnum').getIconFromName(socialNetwork.network|lower) %}
+        {% set socialNetworkBgAndTextColor = enum('App\\Shared\\Enum\\SocialNetworkEnum').getColorFromName(socialNetwork.network|lower) %}
+        {% set socialNetworkBg = socialNetworkBgAndTextColor['bg'] %}
+        {% set socialNetworkTextColor = socialNetworkBgAndTextColor['text'] %}
+
+        <a class="block w-full" href="{{ socialNetwork.url }}" target="_blank">
+            <button class="w-full btn border-[#e5e5e5]" style="background-color: {{ socialNetworkBg }}; color: {{ socialNetworkTextColor }};">
+                <span class="w-6">{{ ux_icon(socialNetworkIcon) }}</span>
+                {{ socialNetwork.label }}
+            </button>
+        </a>
+    {% endfor %}
+</div>
