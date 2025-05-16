@@ -4,6 +4,7 @@
     <div class="flex w-1/2 mx-auto grid gap-2">
         {%  if user %}
             {% set hasSkills = user.skills|length > 0 %}
+            {% set hasSocialNetworks = user.socialNetworks|length > 0 %}
             <div class="flex w-full gap-2">
                 {{ component('Public:UserInfo', {
                     'fullName': user.fullName,
@@ -17,6 +18,15 @@
                 {% if hasSkills %}
                     {{ include('@app/Public/partials/_user_skills.html.twig', {
                         'skills': userSortedSkills,
+                    }) }}
+                {% endif %}
+            </div>
+            <div>
+                {% if hasSocialNetworks %}
+                    <div class="divider"></div>
+
+                    {{ include('@app/Public/partials/_user_social_networks.html.twig', {
+                        'socialNetworks': userSortedSocialNetworks,
                     }) }}
                 {% endif %}
             </div>

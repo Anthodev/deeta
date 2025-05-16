@@ -20,6 +20,7 @@ class IndexController extends AbstractController
         /** @var User|null $user */
         $user = $userRepository->findAll()[0] ?? null;
         $userSortedSkills = $user?->getSkills()->toArray();
+        $userSortedSocialNetworks = $user?->getSocialNetworks()->toArray();
 
         if (null === $userSortedSkills) {
             $userSortedSkills = [];
@@ -29,9 +30,18 @@ class IndexController extends AbstractController
             });
         }
 
+        if (null === $userSortedSocialNetworks) {
+            $userSortedSocialNetworks = [];
+        } else {
+            usort($userSortedSocialNetworks, function ($a, $b) {
+                return $a->getPosition() <=> $b->getPosition();
+            });
+        }
+
         return $this->render('@app/index.html.twig', [
             'user' => $user,
             'userSortedSkills' => $userSortedSkills,
+            'userSortedSocialNetworks' => $userSortedSocialNetworks,
         ]);
     }
 }
