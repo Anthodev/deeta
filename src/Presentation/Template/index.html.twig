@@ -31,7 +31,10 @@
                 {% endif %}
             </div>
         {% else %}
-            <p>No user found.</p>
+            <div role="alert" class="alert alert-error">
+                <span class="w-5">{{ ux_icon('ph:x-circle-bold') }}</span>
+                <span>No user in the database.</span>
+            </div>
         {% endif %}
     </div>
 {% endblock %}

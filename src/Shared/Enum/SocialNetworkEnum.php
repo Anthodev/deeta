@@ -79,12 +79,11 @@ enum SocialNetworkEnum: string
             self::FACEBOOK => ['bg' => '#1A77F2', 'text' => '#fff'],
             self::BLUESKY, self::LINKEDIN => ['bg' => '#0077B5', 'text' => '#fff'],
             self::INSTAGRAM => ['bg' => '#E4405F', 'text' => '#fff'],
-            self::X => ['bg' => '#1DA1F2', 'text' => '#fff'],
             self::MASTODON => ['bg' => '#3088D4', 'text' => '#fff'],
             self::TIKTOK => ['bg' => '#000000', 'text' => '#fff'],
             self::YOUTUBE => ['bg' => '#FF0000', 'text' => '#fff'],
             self::TWITCH => ['bg' => '#6441A5', 'text' => '#fff'],
-            self::GITHUB => ['bg' => '#24292e', 'text' => '#fff'],
+            self::GITHUB, self::X => ['bg' => '#24292e', 'text' => '#fff'],
             default => ['bg' => '#fff', 'text' => '#000'],
         };
     }

@@ -14,7 +14,7 @@ final class Version20250514205356 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Add is_text_white column to skills table';
     }
 
     public function up(Schema $schema): void
