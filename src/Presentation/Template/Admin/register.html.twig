@@ -1,0 +1,120 @@
+{% extends '@app/base.html.twig' %}
+
+{% block content %}
+    <div>
+        <form class="w-full mx-auto" action="{{ path('app_admin_register') }}" method="post">
+            <fieldset class="fieldset w-sm bg-base-200 border border-base-300 p-4 rounded-box mx-auto">
+                <legend class="fieldset-legend">Create an account</legend>
+
+                <label class="fieldset-label input w-full">
+                    <span class="w-4">{{ ux_icon('ph:user-light') }}</span>
+                    <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        class="input"
+                        placeholder="Username"
+                        {{ username is defined and username != '' ? 'value="'~ username ~'"' : null }}
+                        required
+                    />
+                </label>
+
+                <label class="fieldset-label input w-full">
+                    <span class="w-4">{{ ux_icon('ph:envelope-light') }}</span>
+                    <input
+                        id="email"
+                        name="email"
+                        type="text"
+                        class="input"
+                        placeholder="Email"
+                        {{ email is defined and email != '' ? 'value="'~ email ~'"' : null }}
+                        required
+                    />
+                </label>
+
+                <label class="fieldset-label input w-full">
+                    <span class="w-4">{{ ux_icon('ph:key-light') }}</span>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        class="input"
+                        placeholder="Password"
+                        minlength="12"
+                        required
+                    />
+                </label>
+
+                <label class="fieldset-label input w-full">
+                    <span class="w-4">{{ ux_icon('ph:key-light') }}</span>
+                    <input
+                        id="passwordConfirm"
+                        name="passwordConfirm"
+                        type="password"
+                        class="input"
+                        placeholder="Confirm password"
+                        minlength="12"
+                        required
+                    />
+                </label>
+
+                <input type="hidden" name="_target_path" value="/admin">
+
+                <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}" />
+
+                {% for type, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ type}} mt-2">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+                <button id="submitButton" class="btn btn-soft btn-success w-full mt-4">Create</button>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordField = document.getElementById('password');
+            const passwordConfirmField = document.getElementById('passwordConfirm');
+            const submitButton = document.getElementById('submitButton');
+
+            function validatePasswords() {
+                const passwordValue = passwordField.value;
+                const passwordConfirmValue = passwordConfirmField.value;
+
+                passwordConfirmField.closest('.fieldset-label').style.border = '';
+
+                if (passwordConfirmValue === '') {
+                    submitButton.disabled = true;
+                    return;
+                }
+
+                if (
+                    passwordValue !== passwordConfirmValue
+                    || (
+                        passwordValue.length < 12
+                        || passwordConfirmValue.length < 12
+                    )
+                ) {
+                    passwordConfirmField.closest('.fieldset-label').style.border = '1px solid red';
+                    submitButton.disabled = true;
+                } else {
+                    passwordConfirmField.closest('.fieldset-label').style.border = '1px solid green';
+                    submitButton.disabled = false;
+                }
+            }
+
+            validatePasswords();
+
+            passwordField.addEventListener('input', validatePasswords);
+            passwordConfirmField.addEventListener('input', validatePasswords);
+        });
+    </script>
+{% endblock %}

@@ -40,14 +40,14 @@ class AdminIndexController extends AbstractController
         $securityUser = $this->security->getUser();
 
         if (null === $securityUser) {
-            throw new \RuntimeException('User not found');
+            return $this->redirectToRoute('app_admin_login');
         }
 
         /** @var User $securityUser */
         $securityUserId = $securityUser->getId();
 
         if (null === $securityUserId) {
-            throw new \RuntimeException('User not found');
+            return $this->redirectToRoute('app_admin_login');
         }
 
         $currentUser = $this->userRepository->find($securityUserId);
