@@ -6,12 +6,8 @@
             {% set hasSkills = user.skills|length > 0 %}
             {% set hasSocialNetworks = user.socialNetworks|length > 0 %}
             <div class="flex w-full gap-2">
-                {{ component('Public:UserInfo', {
-                    'fullName': user.fullName,
-                    'jobTitle': user.jobTitle,
-                    'company': user.company,
-                    'location': user.location,
-                    'profileImagePath': user.profileImagePath,
+                {{ include('@app/Public/partials/_user_info.html.twig', {
+                    'user': user,
                     'hasSkills': hasSkills,
                 }) }}
 
