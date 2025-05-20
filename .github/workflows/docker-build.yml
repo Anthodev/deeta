@@ -1,0 +1,85 @@
+name: Docker Build and Publish
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  verify-branch:
+    name: Verify tag is on develop branch
+    runs-on: ubuntu-latest
+    outputs:
+      is_develop: ${{ steps.check_branch.outputs.is_develop }}
+    steps:
+      - 
+        name: Checkout code with tags
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history to determine branches where tag exists
+      
+      - 
+        name: Check if tag is on develop branch
+        id: check_branch
+        run: |
+          # If triggered by workflow_dispatch, we don't have a tag and should check current branch
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            if [[ "${{ github.ref_name }}" == "develop" ]]; then
+              echo "is_develop=true" >> $GITHUB_OUTPUT
+            else
+              echo "is_develop=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            # For tag pushes
+            if git branch -r --contains ${{ github.ref }} | grep -q "origin/develop"; then
+              echo "Tag is on develop branch"
+              echo "is_develop=true" >> $GITHUB_OUTPUT
+            else
+              echo "Tag is not on develop branch"
+              echo "is_develop=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+  build-and-push:
+    name: Build and Push Docker image
+    needs: verify-branch
+    if: needs.verify-branch.outputs.is_develop == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Checkout
+        uses: actions/checkout@v4
+      
+      - 
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - 
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - 
+        name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: anthodev/deeta
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=latest,enable=${{ github.ref_type == 'tag' }}
+      
+      - 
+        name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=${{ github.ref }}
+          cache-to: type=gha,scope=${{ github.ref }},mode=max
