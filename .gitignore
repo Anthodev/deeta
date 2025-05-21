@@ -33,3 +33,8 @@ phpstan.neon
 /node_modules
 
 .phpactor.json
+
+./data/database/*
+!./data/database/.gitkeep
+./data/uploads/*
+!./data/uploads/.gitkeep

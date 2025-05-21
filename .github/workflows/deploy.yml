@@ -1,0 +1,81 @@
+name: Deploy to remote server
+
+on:
+  # Deploy when docker-build workflow completes successfully
+  workflow_run:
+    workflows: ["Docker Build and Publish"]
+    types:
+      - completed
+    branches:
+      - develop
+  # Manual trigger
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to remote server
+    runs-on: ubuntu-latest
+    environment: prod
+    # Only run if the docker-build workflow was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SERVER_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SERVER_SSH_USERNAME }}
+          key: ${{ secrets.REMOTE_SERVER_SSH_KEY }}
+          port: ${{ secrets.REMOTE_SERVER_SSH_PORT }}
+          script: |
+            # Navigate to your project directory
+            cd ~/projects/deeta
+
+            # Create data directories if they don't exist
+            mkdir -p ./data/database
+            mkdir -p ./data/uploads
+
+            # Create or update docker-compose.yml for production
+            cat > docker-compose.yml <<EOF
+            version: '3.8'
+
+            services:
+              php:
+                image: anthodev/deeta:latest
+                container_name: deeta-app
+                restart: unless-stopped
+                environment:
+                  APP_ENV: prod
+                  APP_SECRET: \${secrets.APP_SECRET}
+                  DATABASE_URL: \${secrets.DATABASE_URL}
+                volumes:
+                  # Mount database directory
+                  - ./data/database:/var/www/html/var/database
+                  # Mount uploads directory
+                  - ./data/uploads:/var/www/html/public/uploads
+                ports:
+                  - "80:80"
+                  - "443:443"
+            EOF
+
+            # Create .env file if it doesn't exist
+            if [ ! -f .env ]; then
+              cat > .env <<EOF
+            APP_SECRET=${{ secrets.APP_SECRET }}
+            DATABASE_URL=sqlite:///%kernel.project_dir%/var/database/data.sqlite
+            EOF
+            fi
+
+            # Pull the latest image and deploy
+            docker compose pull
+            docker compose up -d
+
+            docker compose exec -T deeta-app bash -c "php bin/console lexik:jwt:generate-keypair"
+            docker compose exec -T deeta-app bash -c "php bin/console doctrine:migrations:migrate -n"
+            docker compose exec -T deeta-app bash -c "npm install"
+            docker compose exec -T deeta-app bash -c "php bin/console importmap:install -n"
+            docker compose exec -T deeta-app bash -c "php bin/console cache:clear"
+            docker compose exec -T deeta-app bash -c "php bin/console tailwind:build -n"
+
+            # Clean up unused images
+            docker image prune -f
