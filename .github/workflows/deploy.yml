@@ -6,8 +6,8 @@ on:
     workflows: ["Docker Build and Publish"]
     types:
       - completed
-    branches:
-      - develop
+    branches: []
+    tags: ['*']
   # Manual trigger
   workflow_dispatch:
 
@@ -16,8 +16,8 @@ jobs:
     name: Deploy to remote server
     runs-on: ubuntu-latest
     environment: prod
-    # Only run if the docker-build workflow was successful
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    # Only run if manually triggered or if the docker-build workflow was successful after a tag push
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Deploy via SSH
