@@ -37,8 +37,6 @@ jobs:
 
             # Create or update docker-compose.yml for production
             cat > docker-compose.yml <<EOF
-            version: '3.8'
-
             services:
               php:
                 image: anthodev/deeta:latest
@@ -46,9 +44,18 @@ jobs:
                 restart: unless-stopped
                 environment:
                   APP_ENV: prod
-                  APP_SECRET: \${secrets.APP_SECRET}
-                  DATABASE_URL: \${secrets.DATABASE_URL}
+                  APP_SECRET: ${{APP_SECRET}}
+                  DATABASE_URL: ${{DATABASE_URL}}
+                  SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
+                  MERCURE_URL: ${CADDY_MERCURE_URL:-http://php/.well-known/mercure}
+                  MERCURE_PUBLIC_URL: ${CADDY_MERCURE_PUBLIC_URL:-https://${SERVER_NAME:-localhost}:${HTTPS_PORT:-443}/.well-known/mercure}
+                  MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+                  MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+                  MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+                  MESSENGER_TRANSPORT_DSN=${MESSENGER_TRANSPORT_DSN}
                 volumes:
+                  - caddy_data:/data
+                  - caddy_config:/config
                   # Mount database directory
                   - ./data/database:/var/www/html/var/database
                   # Mount uploads directory
@@ -56,6 +63,10 @@ jobs:
                 ports:
                   - "80:80"
                   - "443:443"
+                  
+            volumes:
+              caddy_data:
+              caddy_config:
             EOF
 
             # Create .env file if it doesn't exist
@@ -63,6 +74,10 @@ jobs:
               cat > .env <<EOF
             APP_SECRET=${{ secrets.APP_SECRET }}
             DATABASE_URL=sqlite:///%kernel.project_dir%/var/database/data.sqlite
+            MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=1
+            JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+            JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+            JWT_PASSPHRASE=${{ secrets.JWT_PASSPHRASE }}
             EOF
             fi
 

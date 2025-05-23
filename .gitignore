@@ -38,3 +38,5 @@ phpstan.neon
 !./data/database/.gitkeep
 ./data/uploads/*
 !./data/uploads/.gitkeep
+
+.secrets
