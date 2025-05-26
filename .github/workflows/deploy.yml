@@ -6,7 +6,7 @@ on:
     workflows: ["Docker Build and Publish"]
     types:
       - completed
-    branches: []
+    branches: [develop]
     tags: ['*']
   # Manual trigger
   workflow_dispatch:
@@ -16,18 +16,19 @@ jobs:
     name: Deploy to remote server
     runs-on: ubuntu-latest
     environment: prod
-    # Only run if manually triggered or if the docker-build workflow was successful after a tag push
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && (github.event.workflow_run.head_branch == 'develop' || startsWith(github.ref, 'refs/tags/'))) }}
 
     steps:
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.REMOTE_SERVER_SSH_HOST }}
           username: ${{ secrets.REMOTE_SERVER_SSH_USERNAME }}
           key: ${{ secrets.REMOTE_SERVER_SSH_KEY }}
           port: ${{ secrets.REMOTE_SERVER_SSH_PORT }}
           script: |
+            set -e  # Exit on any error
+            
             # Navigate to your project directory
             cd ~/projects/deeta
 
@@ -35,24 +36,30 @@ jobs:
             mkdir -p ./data/database
             mkdir -p ./data/uploads
 
+            # Set environment variables for docker-compose
+            export APP_SECRET="${{ secrets.APP_SECRET }}"
+            export DATABASE_URL="${{ secrets.DATABASE_URL }}"
+            export JWT_PASSPHRASE="${{ secrets.JWT_PASSPHRASE }}"
+            export SERVER_NAME="${{ secrets.SERVER_NAME }}"
+            export MESSENGER_TRANSPORT_DSN="${{ secrets.MESSENGER_TRANSPORT_DSN }}"
+            export HTTPS_PORT="${{ secrets.HTTPS_PORT }}"
+
             # Create or update docker-compose.yml for production
-            cat > docker-compose.yml <<EOF
+            cat > docker-compose.yml <<'EOF'
             services:
-              php:
+              deeta-app:
                 image: anthodev/deeta:latest
                 container_name: deeta-app
                 restart: unless-stopped
                 environment:
                   APP_ENV: prod
-                  APP_SECRET: ${{APP_SECRET}}
-                  DATABASE_URL: ${{DATABASE_URL}}
-                  SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
-                  MERCURE_URL: ${CADDY_MERCURE_URL:-http://php/.well-known/mercure}
-                  MERCURE_PUBLIC_URL: ${CADDY_MERCURE_PUBLIC_URL:-https://${SERVER_NAME:-localhost}:${HTTPS_PORT:-443}/.well-known/mercure}
-                  MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
-                  MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
-                  MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
-                  MESSENGER_TRANSPORT_DSN=${MESSENGER_TRANSPORT_DSN}
+                  APP_SECRET: ${APP_SECRET}
+                  DATABASE_URL: sqlite:///%kernel.project_dir%/var/database/data.sqlite
+                  SERVER_NAME: ${SERVER_NAME:-localhost}, deeta-app:80
+                  MESSENGER_TRANSPORT_DSN: ${MESSENGER_TRANSPORT_DSN:-doctrine://default?auto_setup=1}
+                  JWT_SECRET_KEY: %kernel.project_dir%/config/jwt/private.pem
+                  JWT_PUBLIC_KEY: %kernel.project_dir%/config/jwt/public.pem
+                  JWT_PASSPHRASE: ${JWT_PASSPHRASE}
                 volumes:
                   - caddy_data:/data
                   - caddy_config:/config
@@ -63,6 +70,12 @@ jobs:
                 ports:
                   - "80:80"
                   - "443:443"
+                healthcheck:
+                  test: ["CMD", "curl", "-f", "http://localhost/health"]
+                  interval: 30s
+                  timeout: 10s
+                  retries: 3
+                  start_period: 40s
                   
             volumes:
               caddy_data:
@@ -72,25 +85,72 @@ jobs:
             # Create .env file if it doesn't exist
             if [ ! -f .env ]; then
               cat > .env <<EOF
-            APP_SECRET=${{ secrets.APP_SECRET }}
+            APP_ENV=prod
+            APP_SECRET=${APP_SECRET}
             DATABASE_URL=sqlite:///%kernel.project_dir%/var/database/data.sqlite
-            MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=1
+            MESSENGER_TRANSPORT_DSN=${MESSENGER_TRANSPORT_DSN:-doctrine://default?auto_setup=1}
             JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
             JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
-            JWT_PASSPHRASE=${{ secrets.JWT_PASSPHRASE }}
+            JWT_PASSPHRASE=${JWT_PASSPHRASE}
             EOF
             fi
 
             # Pull the latest image and deploy
+            echo "Pulling latest Docker image..."
             docker compose pull
+
+            echo "Starting services..."
             docker compose up -d
 
-            docker compose exec -T deeta-app bash -c "php bin/console lexik:jwt:generate-keypair"
-            docker compose exec -T deeta-app bash -c "php bin/console doctrine:migrations:migrate -n"
-            docker compose exec -T deeta-app bash -c "npm install"
-            docker compose exec -T deeta-app bash -c "php bin/console importmap:install -n"
-            docker compose exec -T deeta-app bash -c "php bin/console cache:clear"
-            docker compose exec -T deeta-app bash -c "php bin/console tailwind:build -n"
+            # Wait for container to be ready
+            echo "Waiting for container to be ready..."
+            timeout=60
+            while [ $timeout -gt 0 ]; do
+              if docker compose exec -T deeta-app php --version > /dev/null 2>&1; then
+                echo "Container is ready!"
+                break
+              fi
+              sleep 2
+              timeout=$((timeout - 2))
+            done
+
+            if [ $timeout -le 0 ]; then
+              echo "Container failed to start properly"
+              docker compose logs deeta-app
+              exit 1
+            fi
+
+            # Run post-deployment commands
+            echo "Generating JWT keypair..."
+            docker compose exec -T deeta-app php bin/console lexik:jwt:generate-keypair --skip-if-exists
+
+            echo "Running database migrations..."
+            docker compose exec -T deeta-app php bin/console doctrine:migrations:migrate -n
+
+            echo "Installing npm dependencies..."
+            docker compose exec -T deeta-app npm install --production
+
+            echo "Installing importmap..."
+            docker compose exec -T deeta-app php bin/console importmap:install -n
+
+            echo "Clearing cache..."
+            docker compose exec -T deeta-app php bin/console cache:clear --env=prod
+
+            echo "Building Tailwind CSS..."
+            docker compose exec -T deeta-app php bin/console tailwind:build -n
+
+            # Verify deployment
+            echo "Verifying deployment..."
+            if docker compose exec -T deeta-app php bin/console about > /dev/null 2>&1; then
+              echo "Deployment successful!"
+            else
+              echo "Deployment verification failed"
+              docker compose logs deeta-app
+              exit 1
+            fi
 
             # Clean up unused images
+            echo "Cleaning up unused Docker images..."
             docker image prune -f
+
+            echo "Deployment completed successfully!"
