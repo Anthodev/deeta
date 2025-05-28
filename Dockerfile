@@ -29,17 +29,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN set -eux; \
     install-php-extensions \
-        @composer \
-        apcu \
-        intl \
-        opcache \
-        zip \
-        sqlite3 \
-        pdo_sqlite \
-        mbstring \
-        xml \
-        ctype \
-        tokenizer \
+    @composer \
+    apcu \
+    intl \
+    opcache \
+    zip \
+    sqlite3 \
+    pdo_sqlite \
+    mbstring \
+    xml \
+    ctype \
+    tokenizer \
     ;
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
@@ -57,6 +57,8 @@ RUN echo 'alias stan="php vendor/bin/phpstan"' >> ~/.bashrc
 COPY --link frankenphp/conf.d/10-app.ini $PHP_INI_DIR/app.conf.d/
 COPY --link --chmod=755 frankenphp/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 COPY --link frankenphp/Caddyfile /etc/caddy/Caddyfile
+
+RUN mkdir -p var/database
 
 ENTRYPOINT ["docker-entrypoint"]
 
@@ -107,6 +109,4 @@ RUN set -eux; \
     composer dump-autoload --classmap-authoritative --no-dev; \
     composer dump-env prod; \
     composer run-script --no-dev post-install-cmd; \
-    chmod +x bin/console; \
-    php bin/console tailwind:build; \
-    php bin/console asset-map:compile; sync;
+    chmod +x bin/console; sync;
