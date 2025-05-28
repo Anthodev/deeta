@@ -4,9 +4,9 @@
 	frankenphp {
 		{$FRANKENPHP_CONFIG}
 	}
-}
 
-{$CADDY_EXTRA_CONFIG}
+	{$CADDY_EXTRA_CONFIG}
+}
 
 {$SERVER_NAME:localhost} {
 	log {

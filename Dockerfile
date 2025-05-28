@@ -1,6 +1,6 @@
 #syntax=docker/dockerfile:1
 # Versions
-FROM dunglas/frankenphp:1.4.4-php8.4 AS frankenphp_upstream
+FROM dunglas/frankenphp:1.6-php8.4 AS frankenphp_upstream
 
 # The different stages of this Dockerfile are meant to be built into separate images
 # https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage
@@ -72,7 +72,7 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 RUN set -eux; \
     install-php-extensions \
-        xdebug \
+    xdebug \
     ;
 
 COPY --link frankenphp/conf.d/20-app.dev.ini $PHP_INI_DIR/app.conf.d/
@@ -83,7 +83,7 @@ CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile", "--watch" ]
 FROM frankenphp_base AS frankenphp_prod
 
 ENV APP_ENV=prod
-ENV FRANKENPHP_CONFIG="import worker.Caddyfile"
+ENV FRANKENPHP_CONFIG="import /etc/caddy/worker.Caddyfile"
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
@@ -97,16 +97,16 @@ RUN set -eux; \
 
 COPY package*.json ./
 RUN npm install
-RUN php bin/console importmap:install
-RUN php bin/console tailwind:build
 
 # copy sources
 COPY --link . ./
 RUN rm -Rf frankenphp/
 
 RUN set -eux; \
-    mkdir -p var/cache var/log; \
+    mkdir -p var/cache var/log var/database; \
     composer dump-autoload --classmap-authoritative --no-dev; \
     composer dump-env prod; \
     composer run-script --no-dev post-install-cmd; \
-    chmod +x bin/console; sync;
+    chmod +x bin/console; \
+    php bin/console tailwind:build; \
+    php bin/console asset-map:compile; sync;

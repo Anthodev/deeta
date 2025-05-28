@@ -3,7 +3,6 @@
 {% block content %}
     <div>
         {% if error %}
-            {{ dump(error) }}
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
